@@ -9,6 +9,8 @@
 !lessons/*.html
 !reference/
 !reference/*.html
+!assets/
+!assets/*.js
 !publish.sh
 
 # Deliberately NOT published (personal / identifying):

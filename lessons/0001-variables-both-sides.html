@@ -100,6 +100,12 @@
     line-height:1.75;margin:.3rem 0;white-space:pre-wrap}
   .hint{color:var(--muted);font-size:.86rem;
     font-family:ui-sans-serif,system-ui,sans-serif;margin-top:.5rem}
+  .savepanel{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:1.15rem 1.25rem;margin:1.5rem 0}
+  .savepanel h3{margin-top:0}
+  .savepanel p{font-size:.93rem;color:#444}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  #saveMsg{color:var(--good);font-size:.88rem}
   #done{display:none;margin:2rem 0;padding:1.25rem;border-radius:.5rem;
     background:var(--good-soft);border:1px solid var(--good)}
   #done.show{display:block}
@@ -259,6 +265,8 @@ after you've tried it.</p>
   </ul>
 </div>
 
+<div class="savepanel" id="savepanel"></div>
+
 <div class="callout">
   <h3>Write it like the rubric is watching</h3>
   <p>Your syllabus grades &ldquo;precision in mathematical communication&rdquo; and the
@@ -291,135 +299,39 @@ after you've tried it.</p>
 
 </div>
 
+<script src="../assets/quiz.js"></script>
 <script>
-const PROBLEMS = [
-  { prompt: "7x − 4 = 4x + 11", answer: "5",
+Quiz.mount({
+  lesson: "0001",
+  title:  "When x Is on Both Sides",
+  unit:   "Unit 1 — Expressions and Equations",
+  mount:  "#quiz",
+  problems: [
+  { prompt: "7x \u2212 4 = 4x + 11", answer: "5",
     hint: "Subtract 4x from both sides first — it's the smaller variable term.",
-    sol: "7x − 4 = 4x + 11\n7x − 4 − 4x = 4x + 11 − 4x   (subtract 4x)\n3x − 4 = 11\n3x = 15                    (add 4)\nx = 5                      (divide by 3)\n\nCheck: 7(5) − 4 = 31 and 4(5) + 11 = 31. ✓" },
+    sol: "7x \u2212 4 = 4x + 11\n7x \u2212 4 \u2212 4x = 4x + 11 \u2212 4x   (subtract 4x)\n3x \u2212 4 = 11\n3x = 15                    (add 4)\nx = 5                      (divide by 3)\n\nCheck: 7(5) \u2212 4 = 31 and 4(5) + 11 = 31. \u2713" },
 
-  { prompt: "9 − 2x = 5x − 12", answer: "3",
-    hint: "The variable terms are −2x and 5x. Adding 2x to both sides keeps things positive.",
-    sol: "9 − 2x = 5x − 12\n9 = 7x − 12               (add 2x to both sides)\n21 = 7x                    (add 12)\nx = 3                      (divide by 7)\n\nCheck: 9 − 2(3) = 3 and 5(3) − 12 = 3. ✓" },
+  { prompt: "9 \u2212 2x = 5x \u2212 12", answer: "3",
+    hint: "The variable terms are \u22122x and 5x. Adding 2x to both sides keeps things positive.",
+    sol: "9 \u2212 2x = 5x \u2212 12\n9 = 7x \u2212 12               (add 2x to both sides)\n21 = 7x                    (add 12)\nx = 3                      (divide by 7)\n\nCheck: 9 \u2212 2(3) = 3 and 5(3) \u2212 12 = 3. \u2713" },
 
   { prompt: "3(x + 4) = 2x + 18", answer: "6",
     hint: "Distribute the 3 before you move anything.",
-    sol: "3(x + 4) = 2x + 18\n3x + 12 = 2x + 18          (distribute)\nx + 12 = 18                (subtract 2x)\nx = 6                      (subtract 12)\n\nCheck: 3(6 + 4) = 30 and 2(6) + 18 = 30. ✓" },
+    sol: "3(x + 4) = 2x + 18\n3x + 12 = 2x + 18          (distribute)\nx + 12 = 18                (subtract 2x)\nx = 6                      (subtract 12)\n\nCheck: 3(6 + 4) = 30 and 2(6) + 18 = 30. \u2713" },
 
-  { prompt: "5x − 8 = 5x + 1", answer: "none",
+  { prompt: "5x \u2212 8 = 5x + 1", answer: "none",
     hint: "Try subtracting 5x from both sides and read what's left very carefully.",
-    sol: "5x − 8 = 5x + 1\n−8 = 1                     (subtract 5x — the variable is gone)\n\n−8 = 1 is false, and it doesn't depend on x at all.\nNo value of x can make this true.\n\nAnswer: no solution (a contradiction)" },
+    sol: "5x \u2212 8 = 5x + 1\n\u22128 = 1                     (subtract 5x \u2014 the variable is gone)\n\n\u22128 = 1 is false, and it doesn't depend on x at all.\nNo value of x can make this true.\n\nAnswer: no solution (a contradiction)" },
 
-  { prompt: "4(2x − 1) = 8x − 4", answer: "all",
+  { prompt: "4(2x \u2212 1) = 8x \u2212 4", answer: "all",
     hint: "Distribute first, then compare the two sides. Do they look familiar?",
-    sol: "4(2x − 1) = 8x − 4\n8x − 4 = 8x − 4            (distribute — the sides are identical)\n−4 = −4                    (subtract 8x)\n\n−4 = −4 is true no matter what x is.\nEvery real number is a solution.\n\nAnswer: infinitely many solutions (an identity)" },
+    sol: "4(2x \u2212 1) = 8x \u2212 4\n8x \u2212 4 = 8x \u2212 4            (distribute \u2014 the sides are identical)\n\u22124 = \u22124                    (subtract 8x)\n\n\u22124 = \u22124 is true no matter what x is.\nEvery real number is a solution.\n\nAnswer: infinitely many solutions (an identity)" },
 
-  { prompt: "−2(x − 5) = 4x + 22", answer: "-2",
-    hint: "Careful distributing a negative: −2 times −5 is +10, not −10.",
-    sol: "−2(x − 5) = 4x + 22\n−2x + 10 = 4x + 22         (distribute — note −2 × −5 = +10)\n10 = 6x + 22               (add 2x to both sides)\n−12 = 6x                   (subtract 22)\nx = −2                     (divide by 6)\n\nCheck: −2(−2 − 5) = −2(−7) = 14 and 4(−2) + 22 = 14. ✓" }
-];
-
-const NONE = ["nosolution","none","no","nosolutions","emptyset","empty","∅","{}","nosol"];
-const ALL  = ["all","allreals","allrealnumbers","infinite","infinitelymany",
-              "infinitelymanysolutions","infinitesolutions","infinity","everynumber","alln"];
-
-function normalize(raw){
-  let s = raw.toLowerCase().trim()
-    .replace(/[−–—]/g,"-")   // unicode minus/dashes -> hyphen
-    .replace(/[\s,]/g,"");
-  if (NONE.includes(s)) return "none";
-  if (ALL.includes(s))  return "all";
-  s = s.replace(/^x=/,"");
-  if (/^[+-]?\d+(\.\d+)?$/.test(s)) return String(parseFloat(s));
-  return s;
-}
-
-let solved = new Set();
-
-function render(){
-  const quiz = document.getElementById("quiz");
-  PROBLEMS.forEach((p, i) => {
-    const el = document.createElement("div");
-    el.className = "q";
-    el.id = "q" + i;
-    el.innerHTML = `
-      <div class="qhead">Problem ${i+1} of ${PROBLEMS.length}</div>
-      <div class="prompt">${p.prompt}</div>
-      <div class="row">
-        <input type="text" id="in${i}" placeholder="x = ?  or  no solution"
-               autocomplete="off" spellcheck="false" aria-label="Answer to problem ${i+1}">
-        <button data-check="${i}">Check</button>
-        <button class="ghost" data-hint="${i}">Hint</button>
-        <button class="ghost" data-sol="${i}">Show solution</button>
-      </div>
-      <div class="hint" id="hint${i}" style="display:none">${p.hint}</div>
-      <div class="fb" id="fb${i}"><div class="verdictline"></div><div class="detail"></div></div>
-      <div class="sol" id="sol${i}"><pre>${p.sol}</pre></div>`;
-    quiz.appendChild(el);
-  });
-
-  quiz.addEventListener("click", e => {
-    const b = e.target.closest("button"); if(!b) return;
-    if (b.dataset.check !== undefined) check(+b.dataset.check);
-    if (b.dataset.hint  !== undefined) document.getElementById("hint"+b.dataset.hint).style.display = "block";
-    if (b.dataset.sol   !== undefined) document.getElementById("sol"+b.dataset.sol).classList.add("show");
-  });
-
-  PROBLEMS.forEach((_, i) => {
-    document.getElementById("in"+i).addEventListener("keydown", e => {
-      if (e.key === "Enter") check(i);
-    });
-  });
-}
-
-function check(i){
-  const p   = PROBLEMS[i];
-  const raw = document.getElementById("in"+i).value;
-  if (!raw.trim()) return;
-  const got = normalize(raw);
-  const want = normalize(p.answer);
-  const card = document.getElementById("q"+i);
-  const fb   = document.getElementById("fb"+i);
-  const line = fb.querySelector(".verdictline");
-  const det  = fb.querySelector(".detail");
-  fb.classList.add("show");
-
-  if (got === want){
-    card.classList.remove("wrong"); card.classList.add("right");
-    fb.classList.remove("no"); fb.classList.add("ok");
-    line.textContent = "Correct.";
-    det.textContent = want === "none"
-      ? "The variable cancelled and left a false statement — that's a contradiction, so there is no solution."
-      : want === "all"
-      ? "The variable cancelled and left a true statement — that's an identity, so every real number works."
-      : "Now say it out loud: which step would you have written down to justify it?";
-    solved.add(i);
-    document.getElementById("sol"+i).classList.add("show");
-  } else {
-    card.classList.remove("right"); card.classList.add("wrong");
-    fb.classList.remove("ok"); fb.classList.add("no");
-    line.textContent = "Not quite — try once more.";
-    if (got === "0" && (want === "none" || want === "all")){
-      det.textContent = "This is the trap. The variable disappearing does NOT mean x = 0 — it means the equation is telling you about the number of solutions. Look at the statement that's left over and ask whether it's true or false.";
-    } else if ((got === "none" || got === "all") && want !== "none" && want !== "all"){
-      det.textContent = "The variable doesn't actually cancel here — the coefficients on the two sides are different. Redo the step where you moved the variable term.";
-    } else if (want === "none" || want === "all"){
-      det.textContent = "Watch what happens to the variable term when you subtract it from both sides. Does any x survive?";
-    } else {
-      det.textContent = "Check your signs first — that's where this usually goes wrong. Hit Hint if you want a nudge, or Show solution to see every step.";
-    }
-    document.getElementById("hint"+i).style.display = "block";
-  }
-  updateScore();
-}
-
-function updateScore(){
-  const n = solved.size, total = PROBLEMS.length;
-  document.getElementById("scoretext").textContent = n + " of " + total;
-  document.getElementById("bar").style.width = (100*n/total) + "%";
-  if (n === total) document.getElementById("done").classList.add("show");
-}
-
-render();
+  { prompt: "\u22122(x \u2212 5) = 4x + 22", answer: "-2",
+    hint: "Careful distributing a negative: \u22122 times \u22125 is +10, not \u221210.",
+    sol: "\u22122(x \u2212 5) = 4x + 22\n\u22122x + 10 = 4x + 22         (distribute \u2014 note \u22122 \u00d7 \u22125 = +10)\n10 = 6x + 22               (add 2x to both sides)\n\u221212 = 6x                   (subtract 22)\nx = \u22122                     (divide by 6)\n\nCheck: \u22122(\u22122 \u2212 5) = \u22122(\u22127) = 14 and 4(\u22122) + 22 = 14. \u2713" }
+  ]
+});
 </script>
 </body>
 </html>
