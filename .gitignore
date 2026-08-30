@@ -1,0 +1,19 @@
+# ALLOWLIST .gitignore — this repo is PUBLIC.
+# Everything is ignored by default. Only files explicitly un-ignored below
+# are ever published. Add new private files freely; they stay private.
+*
+
+!.gitignore
+!index.html
+!lessons/
+!lessons/*.html
+!reference/
+!reference/*.html
+!publish.sh
+
+# Deliberately NOT published (personal / identifying):
+#   MISSION.md          — names the school, the class, the student
+#   NOTES.md            — teaching notes about the learner
+#   RESOURCES.md        — contains the teacher's email address
+#   learning-records/   — assessments of the learner
+#   README.md           — links to the private files above

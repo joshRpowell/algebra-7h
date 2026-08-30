@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 0001 — When x Is on Both Sides</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5c5c5c; --rule:#dcd8d0; --bg:#fdfcfa; --card:#ffffff;
+    --accent:#8a3324; --accent-soft:#f6efe9;
+    --good:#2f6b3f; --good-soft:#eaf3ec; --bad:#a33; --bad-soft:#fbeeee;
+    --warn:#8a6a10; --warn-soft:#faf4e3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+  .page{max-width:50rem;margin:0 auto;padding:3.5rem 1.5rem 6rem}
+  header{border-bottom:3px double var(--rule);padding-bottom:1.4rem;margin-bottom:2rem}
+  .eyebrow{font:600 .72rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent)}
+  h1{font-size:2.3rem;line-height:1.12;margin:.55rem 0 .5rem;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0;font-size:1.03rem}
+  h2{font-size:1.35rem;margin:2.75rem 0 .6rem;letter-spacing:-.01em}
+  h3{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.95rem;
+    margin:1.4rem 0 .4rem}
+  p{margin:.7rem 0}
+  a{color:var(--accent)}
+  .m{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.95em;
+    background:var(--accent-soft);padding:.08em .35em;border-radius:.2em;
+    white-space:nowrap}
+  /* ---- worked example ---- */
+  .work{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:1.1rem 1.25rem;margin:1.25rem 0}
+  .work .title{font:700 .72rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:.85rem}
+  table.steps{width:100%;border-collapse:collapse}
+  table.steps td{padding:.42rem .5rem;vertical-align:baseline;
+    border-bottom:1px solid #f0ece6}
+  table.steps tr:last-child td{border-bottom:none}
+  table.steps td.eq{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1rem;
+    white-space:nowrap;width:1%}
+  table.steps td.why{color:var(--muted);font-size:.88rem;
+    font-family:ui-sans-serif,system-ui,sans-serif;padding-left:1.5rem}
+  .final{background:var(--good-soft);border-radius:.3rem}
+  .final td.eq{font-weight:700;color:var(--good)}
+  /* ---- callouts ---- */
+  .callout{border-left:4px solid var(--accent);background:var(--accent-soft);
+    padding:.9rem 1.15rem;border-radius:0 .35rem .35rem 0;margin:1.4rem 0}
+  .callout.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .callout.good{border-left-color:var(--good);background:var(--good-soft)}
+  .callout h3{margin-top:0}
+  .callout p:last-child{margin-bottom:0}
+  /* ---- two special cases ---- */
+  .cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;
+    margin:1.25rem 0}
+  .case{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:1rem 1.1rem}
+  .case .tag{font:700 .7rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:inline-block;padding:.3rem .5rem;border-radius:.25rem;
+    margin-bottom:.6rem}
+  .case.no .tag{background:var(--bad-soft);color:var(--bad)}
+  .case.inf .tag{background:var(--good-soft);color:var(--good)}
+  .case pre{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.9rem;margin:.4rem 0;
+    line-height:1.7;white-space:pre-wrap}
+  .case .verdict{font-weight:700;margin-top:.5rem}
+  /* ---- practice ---- */
+  .scorebar{position:sticky;top:0;z-index:5;background:var(--bg);
+    border-bottom:1px solid var(--rule);padding:.7rem 0;margin:1.5rem 0 .5rem;
+    font:600 .85rem/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    display:flex;align-items:center;gap:.75rem}
+  .track{flex:1;height:.4rem;background:#eae5dd;border-radius:.2rem;overflow:hidden}
+  .track span{display:block;height:100%;width:0;background:var(--good);
+    transition:width .35s ease}
+  .q{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:1.1rem 1.25rem;margin:1rem 0;transition:border-color .2s}
+  .q.right{border-color:var(--good);background:var(--good-soft)}
+  .q.wrong{border-color:var(--bad)}
+  .qhead{font:700 .7rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+  .prompt{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1.15rem;
+    margin:.2rem 0 .9rem}
+  .row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+  input[type=text]{font:1rem/1.4 "SF Mono",Menlo,Consolas,monospace;padding:.5rem .65rem;
+    border:1px solid #c9c2b8;border-radius:.35rem;width:13rem;background:#fff;color:var(--ink)}
+  input[type=text]:focus{outline:2px solid var(--accent);outline-offset:1px}
+  button{font:600 .85rem/1 ui-sans-serif,system-ui,sans-serif;padding:.6rem .95rem;
+    border-radius:.35rem;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;cursor:pointer}
+  button.ghost{background:transparent;color:var(--accent)}
+  button:hover{filter:brightness(1.08)}
+  .fb{margin-top:.75rem;font-size:.93rem;display:none}
+  .fb.show{display:block}
+  .fb .verdictline{font-weight:700;margin-bottom:.3rem}
+  .fb.ok .verdictline{color:var(--good)}
+  .fb.no .verdictline{color:var(--bad)}
+  .sol{margin-top:.6rem;padding-top:.6rem;border-top:1px dashed var(--rule);
+    display:none}
+  .sol.show{display:block}
+  .sol pre{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.88rem;
+    line-height:1.75;margin:.3rem 0;white-space:pre-wrap}
+  .hint{color:var(--muted);font-size:.86rem;
+    font-family:ui-sans-serif,system-ui,sans-serif;margin-top:.5rem}
+  #done{display:none;margin:2rem 0;padding:1.25rem;border-radius:.5rem;
+    background:var(--good-soft);border:1px solid var(--good)}
+  #done.show{display:block}
+  footer{margin-top:3.5rem;padding-top:1.25rem;border-top:1px solid var(--rule);
+    color:var(--muted);font-size:.88rem}
+  ul.tight li{margin:.4rem 0}
+  @media print{
+    body{background:#fff}.page{padding:0;max-width:none}
+    .scorebar,button{display:none}.sol,.fb{display:block !important}
+    h2{break-after:avoid}.q,.work,.callout,.case{break-inside:avoid}
+    a{color:var(--ink);text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <span class="eyebrow">Lesson 0001 · Unit 1 — Expressions and Equations</span>
+  <h1>When <em>x</em> Is on Both Sides</h1>
+  <p class="sub">One move handles every equation like this. Then one twist that
+  decides who gets full marks on the checkpoint.</p>
+</header>
+
+<p>You can already solve <span class="m">3x + 5 = 20</span>. Every step you take there
+has the same purpose: get <em>x</em> alone. This lesson is the same job with one new
+obstacle — <em>x</em> shows up on <strong>both</strong> sides of the equals sign — and
+then one genuinely sneaky case that most of your class will get wrong the first time.</p>
+
+<p>That sneaky case is why this is your first lesson. It's the classic Unit 1
+checkpoint-killer: not hard, just unfamiliar, so strong students walk straight into it.
+Fifteen minutes now and it can't touch you.</p>
+
+<h2>The one move</h2>
+
+<div class="callout">
+  <p><strong>Variables are terms, and terms can move.</strong> You already move numbers
+  across the equals sign by doing the same thing to both sides. A variable term works
+  exactly the same way. Subtract <span class="m">3x</span> from both sides and it
+  vanishes from one side and appears on the other — no new rule required.</p>
+  <p>So: <strong>gather all the variable terms on one side and all the constants on the
+  other.</strong> Then finish the way you always have.</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 1</div>
+  <table class="steps">
+    <tr><td class="eq">5x + 3 = 3x + 11</td><td class="why">Start. <em>x</em> on both sides.</td></tr>
+    <tr><td class="eq">5x + 3 &minus; 3x = 3x + 11 &minus; 3x</td><td class="why">Subtract <span class="m">3x</span> from <strong>both</strong> sides — properties of equality.</td></tr>
+    <tr><td class="eq">2x + 3 = 11</td><td class="why">Combine like terms. Now it's an equation you've solved a hundred times.</td></tr>
+    <tr><td class="eq">2x = 8</td><td class="why">Subtract 3 from both sides.</td></tr>
+    <tr class="final"><td class="eq">x = 4</td><td class="why">Divide both sides by 2.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Check:</strong>
+  left side <span class="m">5(4) + 3 = 23</span>; right side <span class="m">3(4) + 11 = 23</span>. Both 23. ✓</p>
+</div>
+
+<div class="callout warn">
+  <h3>Which side do you move the variable to?</h3>
+  <p>Either works — you'll get the same answer. But there's a reason to prefer one:
+  <strong>move the smaller variable term</strong>, so the coefficient you're left with is
+  positive. In the example above, moving <span class="m">3x</span> left us with
+  <span class="m">2x</span>. Moving <span class="m">5x</span> instead would have given
+  <span class="m">&minus;2x = &minus;8</span> — same answer, two extra chances to drop a
+  negative sign. Top students don't avoid sign errors by being careful. They avoid them
+  by choosing the path with fewer signs.</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 2 — with parentheses and a negative answer</div>
+  <table class="steps">
+    <tr><td class="eq">4(x &minus; 2) = 6x + 4</td><td class="why">Parentheses first.</td></tr>
+    <tr><td class="eq">4x &minus; 8 = 6x + 4</td><td class="why">Distribute: the 4 hits <em>both</em> terms inside, sign included.</td></tr>
+    <tr><td class="eq">&minus;8 = 2x + 4</td><td class="why">Subtract <span class="m">4x</span> from both sides (the smaller one).</td></tr>
+    <tr><td class="eq">&minus;12 = 2x</td><td class="why">Subtract 4 from both sides.</td></tr>
+    <tr class="final"><td class="eq">x = &minus;6</td><td class="why">Divide by 2. <em>x</em> on the right is fine — flip it for readability.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Check:</strong>
+  <span class="m">4(&minus;6 &minus; 2) = 4(&minus;8) = &minus;32</span>;
+  <span class="m">6(&minus;6) + 4 = &minus;32</span>. ✓</p>
+</div>
+
+<h2>The twist: when <em>x</em> disappears</h2>
+
+<p>Sometimes you subtract the variable term from both sides and the variable vanishes
+from the equation <em>entirely</em>. Students panic here and write &ldquo;x = 0&rdquo;.
+That is wrong, and it is worth real points.</p>
+
+<p>Nothing has gone wrong. The equation is just telling you something different than
+usual. <strong>Read the statement that's left and ask: is it true or false?</strong></p>
+
+<div class="cases">
+  <div class="case no">
+    <span class="tag">False → No solution</span>
+    <pre>  5x &minus; 8 = 5x + 1
+&minus;5x        &minus;5x
+  &minus;8 = 1   ← false!</pre>
+    <p style="font-size:.9rem;margin:.5rem 0 0">&minus;8 is never equal to 1, no matter
+    what <em>x</em> is. So no number can make this equation true.</p>
+    <p class="verdict">Answer: <span class="m">no solution</span> (the empty set, ∅)</p>
+  </div>
+  <div class="case inf">
+    <span class="tag">True → Infinitely many</span>
+    <pre>  4(2x &minus; 1) = 8x &minus; 4
+   8x &minus; 4 = 8x &minus; 4
+&minus;8x         &minus;8x
+       &minus;4 = &minus;4  ← true!</pre>
+    <p style="font-size:.9rem;margin:.5rem 0 0">Both sides were the same expression in
+    disguise. <em>Every</em> number works.</p>
+    <p class="verdict">Answer: <span class="m">infinitely many solutions</span> (all real numbers)</p>
+  </div>
+</div>
+
+<div class="callout good">
+  <h3>The rule, in one line</h3>
+  <p>A linear equation has <strong>exactly one solution, no solutions, or infinitely
+  many solutions</strong> — never any other number of them. If the variable survives, you
+  get one solution. If it cancels out, look at what's left: a false statement means no
+  solution; a true statement means infinitely many.
+  (<a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:solve-equations-inequalities/x2f8bb11595b61c86:num-solutions-linear-equations/v/number-of-solutions-to-linear-equations">Khan Academy
+  covers this same rule here</a>.)</p>
+  <p>The vocabulary, for when a problem asks you to name it: an equation that's always
+  true is an <strong>identity</strong>; one that's never true is a
+  <strong>contradiction</strong>. Both are in the
+  <a href="../reference/GLOSSARY.html">glossary</a>.</p>
+</div>
+
+<h2>Your turn</h2>
+<p>Six problems. Type the value of <em>x</em> — or, if the variable cancels, type
+<strong>no solution</strong> or <strong>infinitely many</strong>. Press Enter to check.
+You get feedback instantly, and you can reveal the full worked solution for any problem
+after you've tried it.</p>
+
+<div class="scorebar">
+  <span id="scoretext">0 of 6</span>
+  <span class="track"><span id="bar"></span></span>
+</div>
+
+<div id="quiz"></div>
+
+<div id="done">
+  <h3 style="margin-top:0">That's the lesson.</h3>
+  <p>You can now solve any linear equation with variables on both sides, and — more
+  importantly — you know what to do when the variable disappears, which is the part
+  that trips up the rest of the class.</p>
+  <p><strong>Two things to do next:</strong></p>
+  <ul class="tight">
+    <li>Get more reps with instant feedback:
+      <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:solve-equations-inequalities/x2f8bb11595b61c86:linear-equations-variables-both-sides/e/linear_equations_3">Khan
+      Academy — variables on both sides</a> and
+      <a href="https://www.khanacademy.org/math/math1/x89d82521517266d4:eq-ineq/x89d82521517266d4:eq-num-of-sol/e/solutions-to-linear-equations">number
+      of solutions</a>.</li>
+    <li>Tell your tutor you finished this, and ask for Lesson 0002 — the distributive
+      property with negatives, which is where the sign errors live.</li>
+  </ul>
+</div>
+
+<div class="callout">
+  <h3>Write it like the rubric is watching</h3>
+  <p>Your syllabus grades &ldquo;precision in mathematical communication&rdquo; and the
+  ability to <em>justify</em> solutions — not just the final answer. On a checkpoint,
+  that means:</p>
+  <ul class="tight">
+    <li>One line per step, equals signs lined up, nothing done in your head.</li>
+    <li>When the variable cancels, don't just write the answer — write the sentence:
+      <em>&ldquo;&minus;8 = 1 is false, so there is no solution.&rdquo;</em> That one
+      sentence is the difference between full credit and partial credit.</li>
+    <li>Check your answer in the <strong>original</strong> equation, not in a line you
+      rewrote — otherwise you'll confirm your own mistake.</li>
+  </ul>
+</div>
+
+<footer>
+  <p><strong>Ask your tutor.</strong> Anything above that didn't land, say so and you'll
+  get it explained a different way, or more practice problems. If you're stuck on an
+  <em>assigned</em> problem, don't paste it in — ask for a similar one with different
+  numbers instead. Your syllabus's AI policy is strict, and this workspace is built to
+  keep you on the right side of it.</p>
+  <p><strong>Sources:</strong>
+  <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:solve-equations-inequalities">Khan
+  Academy — Solving equations &amp; inequalities (Algebra 1)</a> ·
+  <a href="https://openstax.org/details/books/elementary-algebra-2e">OpenStax,
+  <em>Elementary Algebra 2e</em></a></p>
+  <p>See also: <a href="../reference/COURSE-MAP.html">Course Map &amp; Playbook</a> ·
+  <a href="../reference/GLOSSARY.html">Glossary</a></p>
+</footer>
+
+</div>
+
+<script>
+const PROBLEMS = [
+  { prompt: "7x − 4 = 4x + 11", answer: "5",
+    hint: "Subtract 4x from both sides first — it's the smaller variable term.",
+    sol: "7x − 4 = 4x + 11\n7x − 4 − 4x = 4x + 11 − 4x   (subtract 4x)\n3x − 4 = 11\n3x = 15                    (add 4)\nx = 5                      (divide by 3)\n\nCheck: 7(5) − 4 = 31 and 4(5) + 11 = 31. ✓" },
+
+  { prompt: "9 − 2x = 5x − 12", answer: "3",
+    hint: "The variable terms are −2x and 5x. Adding 2x to both sides keeps things positive.",
+    sol: "9 − 2x = 5x − 12\n9 = 7x − 12               (add 2x to both sides)\n21 = 7x                    (add 12)\nx = 3                      (divide by 7)\n\nCheck: 9 − 2(3) = 3 and 5(3) − 12 = 3. ✓" },
+
+  { prompt: "3(x + 4) = 2x + 18", answer: "6",
+    hint: "Distribute the 3 before you move anything.",
+    sol: "3(x + 4) = 2x + 18\n3x + 12 = 2x + 18          (distribute)\nx + 12 = 18                (subtract 2x)\nx = 6                      (subtract 12)\n\nCheck: 3(6 + 4) = 30 and 2(6) + 18 = 30. ✓" },
+
+  { prompt: "5x − 8 = 5x + 1", answer: "none",
+    hint: "Try subtracting 5x from both sides and read what's left very carefully.",
+    sol: "5x − 8 = 5x + 1\n−8 = 1                     (subtract 5x — the variable is gone)\n\n−8 = 1 is false, and it doesn't depend on x at all.\nNo value of x can make this true.\n\nAnswer: no solution (a contradiction)" },
+
+  { prompt: "4(2x − 1) = 8x − 4", answer: "all",
+    hint: "Distribute first, then compare the two sides. Do they look familiar?",
+    sol: "4(2x − 1) = 8x − 4\n8x − 4 = 8x − 4            (distribute — the sides are identical)\n−4 = −4                    (subtract 8x)\n\n−4 = −4 is true no matter what x is.\nEvery real number is a solution.\n\nAnswer: infinitely many solutions (an identity)" },
+
+  { prompt: "−2(x − 5) = 4x + 22", answer: "-2",
+    hint: "Careful distributing a negative: −2 times −5 is +10, not −10.",
+    sol: "−2(x − 5) = 4x + 22\n−2x + 10 = 4x + 22         (distribute — note −2 × −5 = +10)\n10 = 6x + 22               (add 2x to both sides)\n−12 = 6x                   (subtract 22)\nx = −2                     (divide by 6)\n\nCheck: −2(−2 − 5) = −2(−7) = 14 and 4(−2) + 22 = 14. ✓" }
+];
+
+const NONE = ["nosolution","none","no","nosolutions","emptyset","empty","∅","{}","nosol"];
+const ALL  = ["all","allreals","allrealnumbers","infinite","infinitelymany",
+              "infinitelymanysolutions","infinitesolutions","infinity","everynumber","alln"];
+
+function normalize(raw){
+  let s = raw.toLowerCase().trim()
+    .replace(/[−–—]/g,"-")   // unicode minus/dashes -> hyphen
+    .replace(/[\s,]/g,"");
+  if (NONE.includes(s)) return "none";
+  if (ALL.includes(s))  return "all";
+  s = s.replace(/^x=/,"");
+  if (/^[+-]?\d+(\.\d+)?$/.test(s)) return String(parseFloat(s));
+  return s;
+}
+
+let solved = new Set();
+
+function render(){
+  const quiz = document.getElementById("quiz");
+  PROBLEMS.forEach((p, i) => {
+    const el = document.createElement("div");
+    el.className = "q";
+    el.id = "q" + i;
+    el.innerHTML = `
+      <div class="qhead">Problem ${i+1} of ${PROBLEMS.length}</div>
+      <div class="prompt">${p.prompt}</div>
+      <div class="row">
+        <input type="text" id="in${i}" placeholder="x = ?  or  no solution"
+               autocomplete="off" spellcheck="false" aria-label="Answer to problem ${i+1}">
+        <button data-check="${i}">Check</button>
+        <button class="ghost" data-hint="${i}">Hint</button>
+        <button class="ghost" data-sol="${i}">Show solution</button>
+      </div>
+      <div class="hint" id="hint${i}" style="display:none">${p.hint}</div>
+      <div class="fb" id="fb${i}"><div class="verdictline"></div><div class="detail"></div></div>
+      <div class="sol" id="sol${i}"><pre>${p.sol}</pre></div>`;
+    quiz.appendChild(el);
+  });
+
+  quiz.addEventListener("click", e => {
+    const b = e.target.closest("button"); if(!b) return;
+    if (b.dataset.check !== undefined) check(+b.dataset.check);
+    if (b.dataset.hint  !== undefined) document.getElementById("hint"+b.dataset.hint).style.display = "block";
+    if (b.dataset.sol   !== undefined) document.getElementById("sol"+b.dataset.sol).classList.add("show");
+  });
+
+  PROBLEMS.forEach((_, i) => {
+    document.getElementById("in"+i).addEventListener("keydown", e => {
+      if (e.key === "Enter") check(i);
+    });
+  });
+}
+
+function check(i){
+  const p   = PROBLEMS[i];
+  const raw = document.getElementById("in"+i).value;
+  if (!raw.trim()) return;
+  const got = normalize(raw);
+  const want = normalize(p.answer);
+  const card = document.getElementById("q"+i);
+  const fb   = document.getElementById("fb"+i);
+  const line = fb.querySelector(".verdictline");
+  const det  = fb.querySelector(".detail");
+  fb.classList.add("show");
+
+  if (got === want){
+    card.classList.remove("wrong"); card.classList.add("right");
+    fb.classList.remove("no"); fb.classList.add("ok");
+    line.textContent = "Correct.";
+    det.textContent = want === "none"
+      ? "The variable cancelled and left a false statement — that's a contradiction, so there is no solution."
+      : want === "all"
+      ? "The variable cancelled and left a true statement — that's an identity, so every real number works."
+      : "Now say it out loud: which step would you have written down to justify it?";
+    solved.add(i);
+    document.getElementById("sol"+i).classList.add("show");
+  } else {
+    card.classList.remove("right"); card.classList.add("wrong");
+    fb.classList.remove("ok"); fb.classList.add("no");
+    line.textContent = "Not quite — try once more.";
+    if (got === "0" && (want === "none" || want === "all")){
+      det.textContent = "This is the trap. The variable disappearing does NOT mean x = 0 — it means the equation is telling you about the number of solutions. Look at the statement that's left over and ask whether it's true or false.";
+    } else if ((got === "none" || got === "all") && want !== "none" && want !== "all"){
+      det.textContent = "The variable doesn't actually cancel here — the coefficients on the two sides are different. Redo the step where you moved the variable term.";
+    } else if (want === "none" || want === "all"){
+      det.textContent = "Watch what happens to the variable term when you subtract it from both sides. Does any x survive?";
+    } else {
+      det.textContent = "Check your signs first — that's where this usually goes wrong. Hit Hint if you want a nudge, or Show solution to see every step.";
+    }
+    document.getElementById("hint"+i).style.display = "block";
+  }
+  updateScore();
+}
+
+function updateScore(){
+  const n = solved.size, total = PROBLEMS.length;
+  document.getElementById("scoretext").textContent = n + " of " + total;
+  document.getElementById("bar").style.width = (100*n/total) + "%";
+  if (n === total) document.getElementById("done").classList.add("show");
+}
+
+render();
+</script>
+</body>
+</html>
