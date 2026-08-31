@@ -9,14 +9,21 @@
 (function (global) {
   "use strict";
 
-  var PROGRESS_REPO = "joshRpowell/algebra-7h-progress";
+  /* Config comes from assets/site.config.js (loaded first in every page's <head>).
+   * The fallbacks keep this file working standalone — e.g. in the node test harness,
+   * which mounts the engine without a page. */
+  var CFG = (global.SITE || {});
+  var PROGRESS_REPO = CFG.progressRepo || "joshRpowell/algebra-7h-progress";
+  var NS            = CFG.ns           || "alg7h";
+  var PLACEHOLDER   = CFG.answerPlaceholder || "x = ?  or  no solution";
+  var LABELS        = CFG.labels || { run: "results", review: "needs-review", lesson: "lesson:" };
 
   /* ---------------- student identity ----------------
    * Several kids share this site, so every run has to say who did it, and each
    * kid's saved progress has to live under its own key or they clobber each
    * other on a shared browser. First names only — enough to tell runs apart.
    */
-  var ROSTER_KEY = "alg7h:roster", CURRENT_KEY = "alg7h:current";
+  var ROSTER_KEY = NS + ":roster", CURRENT_KEY = NS + ":current";
 
   function lsGet(k, dflt) {
     try { var v = localStorage.getItem(k); return v === null ? dflt : JSON.parse(v); }
@@ -205,7 +212,7 @@
     this.cfg = cfg;
     this.P = cfg.problems;
     this.student = student;
-    this.key = "alg7h:" + slugify(student) + ":" + cfg.lesson;
+    this.key = NS + ":" + slugify(student) + ":" + cfg.lesson;
     this.started = Date.now();
     this.stats = this.P.map(function () {
       return { attempts:0, solved:false, firstTry:false, hint:false, shownSol:false, wrong:[] };
@@ -256,7 +263,7 @@
           '</div>'
         : '<div class="row">' +
             '<input type="text" id="in' + i + '" placeholder="' +
-                   (p.placeholder || "x = ?  or  no solution") + '" ' +
+                   (p.placeholder || PLACEHOLDER) + '" ' +
                    'autocomplete="off" spellcheck="false" aria-label="Answer to problem ' + (i+1) + '">' +
             '<button data-check="' + i + '">Check</button>' +
             '<button class="ghost" data-hint="' + i + '">Hint</button>' +
@@ -492,7 +499,8 @@
 
     // Only labels that already exist in the repo — GitHub's prefill URL drops
     // unknown ones, so the student name lives in the title/body/JSON instead.
-    var labels = "results,lesson:" + cfg.lesson + (struggled.length ? ",needs-review" : "");
+    var labels = LABELS.run + "," + LABELS.lesson + cfg.lesson +
+                 (struggled.length ? "," + LABELS.review : "");
     return {
       title: title, body: body,
       url: "https://github.com/" + PROGRESS_REPO + "/issues/new" +

@@ -7,7 +7,7 @@
  */
 (function () {
   "use strict";
-  var KEY = "alg7h:theme";
+  var KEY = ((window.SITE && window.SITE.ns) || "alg7h") + ":theme";
   var ORDER = ["auto", "light", "dark"];
   var FACE = {
     auto:  { glyph: "◐", label: "Auto"  },
