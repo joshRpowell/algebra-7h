@@ -11,6 +11,7 @@
 !reference/*.html
 !assets/
 !assets/*.js
+!assets/*.css
 !publish.sh
 
 # Deliberately NOT published (personal / identifying):

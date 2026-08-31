@@ -1,0 +1,117 @@
+/* Algebra 7H — shared theme.
+ * Light is the base. Dark applies when the reader's system asks for it, unless
+ * they have explicitly chosen light. An explicit choice always wins.
+ * Print is always forced light: the reference sheets are meant to be printed,
+ * and a dark page wastes a cartridge.
+ */
+
+:root {
+  color-scheme: light;
+  --ink:          #1a1a1a;
+  --ink-soft:     #3a3a3a;
+  --muted:        #5c5c5c;
+  --rule:         #dcd8d0;
+  --rule-faint:   #f0ece6;
+  --bg:           #fdfcfa;
+  --card:         #ffffff;
+  --surface-alt:  #f7f5f1;
+  --track:        #eae5dd;
+  --field-border: #c9c2b8;
+  --accent:       #8a3324;
+  --accent-soft:  #f6efe9;
+  --accent-line:  #e6d9d1;
+  --accent-ink:   #6b4a40;
+  --good:         #2f6b3f;
+  --good-soft:    #eaf3ec;
+  --bad:          #a33333;
+  --bad-soft:     #fbeeee;
+  --warn:         #8a6a10;
+  --warn-soft:    #faf4e3;
+  --shadow:       rgba(138,51,36,.09);
+}
+
+/* Warm dark — same family as the light theme, not a cold grey. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ink:          #ece7df;
+    --ink-soft:     #d2ccc3;
+    --muted:        #a79e93;
+    --rule:         #3c3832;
+    --rule-faint:   #2a2724;
+    --bg:           #171614;
+    --card:         #201e1b;
+    --surface-alt:  #262320;
+    --track:        #332f2a;
+    --field-border: #514b43;
+    --accent:       #eda78f;
+    --accent-soft:  #2f221d;
+    --accent-line:  #46322b;
+    --accent-ink:   #e6bcab;
+    --good:         #86ce9b;
+    --good-soft:    #1c2b21;
+    --bad:          #f09595;
+    --bad-soft:     #301f1f;
+    --warn:         #e0bb66;
+    --warn-soft:    #2c2618;
+    --shadow:       rgba(0,0,0,.45);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink:          #ece7df;
+  --ink-soft:     #d2ccc3;
+  --muted:        #a79e93;
+  --rule:         #3c3832;
+  --rule-faint:   #2a2724;
+  --bg:           #171614;
+  --card:         #201e1b;
+  --surface-alt:  #262320;
+  --track:        #332f2a;
+  --field-border: #514b43;
+  --accent:       #eda78f;
+  --accent-soft:  #2f221d;
+  --accent-line:  #46322b;
+  --accent-ink:   #e6bcab;
+  --good:         #86ce9b;
+  --good-soft:    #1c2b21;
+  --bad:          #f09595;
+  --bad-soft:     #301f1f;
+  --warn:         #e0bb66;
+  --warn-soft:    #2c2618;
+  --shadow:       rgba(0,0,0,.45);
+}
+
+/* The theme switch, injected into each page's <header> by theme.js. */
+.themetoggle {
+  position: absolute; top: 0; right: 0;
+  display: inline-flex; align-items: center; gap: .4rem;
+  font: 600 .74rem/1 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); background: var(--card);
+  border: 1px solid var(--rule); border-radius: 2rem;
+  padding: .45rem .8rem; cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.themetoggle:hover { color: var(--accent); border-color: var(--accent); }
+.themetoggle .glyph { font-size: .95rem; line-height: 1; }
+header { position: relative; padding-right: 7rem; }
+@media (max-width: 34rem) {
+  header { padding-right: 0; }
+  .themetoggle { position: static; margin-bottom: .9rem; }
+}
+
+@media print {
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]) {
+    color-scheme: light;
+    --ink:#1a1a1a; --ink-soft:#3a3a3a; --muted:#5c5c5c; --rule:#dcd8d0;
+    --rule-faint:#f0ece6; --bg:#ffffff; --card:#ffffff; --surface-alt:#f7f5f1;
+    --track:#eae5dd; --field-border:#c9c2b8; --accent:#8a3324; --accent-soft:#f6efe9;
+    --accent-line:#e6d9d1; --accent-ink:#6b4a40; --good:#2f6b3f; --good-soft:#eaf3ec;
+    --bad:#a33333; --bad-soft:#fbeeee; --warn:#8a6a10; --warn-soft:#faf4e3;
+    --shadow:transparent;
+  }
+  .themetoggle { display: none !important; }
+  header { padding-right: 0; }
+}

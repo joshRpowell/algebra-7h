@@ -4,11 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Algebra 7 Honors — Course Map &amp; Playbook</title>
+<script>(function(){try{var t=localStorage.getItem("alg7h:theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-  :root{
-    --ink:#1a1a1a; --muted:#5c5c5c; --rule:#dcd8d0; --bg:#fdfcfa;
-    --accent:#8a3324; --accent-soft:#f6efe9; --good:#2f6b3f; --warn:#8a6a10;
-  }
   *{box-sizing:border-box}
   body{
     margin:0; background:var(--bg); color:var(--ink);
@@ -28,7 +26,7 @@
   a{color:var(--accent)}
   .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));
     gap:.75rem;margin:1.25rem 0}
-  .fact{background:#fff;border:1px solid var(--rule);border-radius:.4rem;padding:.75rem .9rem}
+  .fact{background:var(--card);border:1px solid var(--rule);border-radius:.4rem;padding:.75rem .9rem}
   .fact .k{font:600 .68rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
     text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.35rem}
   .fact .v{font-size:.95rem}
@@ -44,8 +42,8 @@
   ol.units .what{color:var(--muted);font-size:.92rem;display:block;margin-top:.15rem}
   .callout{border-left:4px solid var(--accent);background:var(--accent-soft);
     padding:.9rem 1.1rem;border-radius:0 .35rem .35rem 0;margin:1.25rem 0}
-  .callout.good{border-left-color:var(--good);background:#eef5ef}
-  .callout.warn{border-left-color:var(--warn);background:#faf4e3}
+  .callout.good{border-left-color:var(--good);background:var(--good-soft)}
+  .callout.warn{border-left-color:var(--warn);background:var(--warn-soft)}
   .callout h3{margin-top:0}
   table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.93rem}
   th,td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--rule);
@@ -56,11 +54,11 @@
   footer{margin-top:3.5rem;padding-top:1.25rem;border-top:1px solid var(--rule);
     color:var(--muted);font-size:.85rem}
   @media print{
-    body{background:#fff}
+    body{background:var(--card)}
     .page{padding:0;max-width:none}
     h2{break-after:avoid} .callout,ol.units li,table{break-inside:avoid}
     a{color:var(--ink);text-decoration:none}
-    a[href^="http"]::after{content:" (" attr(href) ")";font-size:.72em;color:#666}
+    a[href^="http"]::after{content:" (" attr(href) ")";font-size:.72em;color:var(--muted)}
   }
 </style>
 </head>
@@ -195,5 +193,6 @@ it came from.</p>
 </footer>
 
 </div>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

@@ -7,12 +7,9 @@
 <meta name="description" content="Lessons and reference sheets for Algebra 7 Honors.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+<script>(function(){try{var t=localStorage.getItem("alg7h:theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/theme.css">
 <style>
-  :root{
-    --ink:#1a1a1a;--muted:#5c5c5c;--rule:#dcd8d0;--bg:#fdfcfa;--card:#fff;
-    --accent:#8a3324;--accent-soft:#f6efe9;--good:#2f6b3f;--good-soft:#eaf3ec;
-    --warn:#8a6a10;--warn-soft:#faf4e3;
-  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
     font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
@@ -33,7 +30,7 @@
     border-radius:.55rem;padding:1.05rem 1.2rem;margin:.7rem 0;text-decoration:none;
     color:inherit;transition:border-color .15s,transform .15s,box-shadow .15s}
   .card:hover{border-color:var(--accent);transform:translateY(-1px);
-    box-shadow:0 3px 14px rgba(138,51,36,.09)}
+    box-shadow:0 3px 14px var(--shadow)}
   .card .no{font:700 .68rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.11em;
     color:var(--accent);background:var(--accent-soft);padding:.28rem .5rem;
     border-radius:.25rem;display:inline-block;margin-bottom:.5rem}
@@ -42,9 +39,9 @@
   .card .meta{margin-top:.6rem;font:.78rem/1.4 ui-sans-serif,system-ui,sans-serif;
     color:var(--muted)}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.7rem}
-  .soon{background:#f7f5f1;border-style:dashed;color:var(--muted);cursor:default}
+  .soon{background:var(--surface-alt);border-style:dashed;color:var(--muted);cursor:default}
   .soon:hover{border-color:var(--rule);transform:none;box-shadow:none}
-  .soon .t{font-weight:600;color:#8b8377}
+  .soon .t{font-weight:600;color:var(--muted)}
   /* units */
   ol.units{list-style:none;counter-reset:u;padding:0;margin:.5rem 0}
   ol.units li{counter-increment:u;position:relative;padding:.55rem 0 .55rem 2.9rem;
@@ -53,7 +50,7 @@
     width:1.8rem;height:1.8rem;border-radius:50%;background:var(--accent-soft);
     color:var(--accent);font:700 .85rem/1.8rem ui-sans-serif,system-ui,sans-serif;
     text-align:center}
-  ol.units li.now::before{background:var(--accent);color:#fff}
+  ol.units li.now::before{background:var(--accent);color:var(--card)}
   ol.units li.now{font-weight:600}
   ol.units .tag{font:600 .68rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.09em;
     text-transform:uppercase;color:var(--accent);margin-left:.5rem}
@@ -95,7 +92,7 @@
 </a>
 
 <div class="card soon">
-  <span class="no" style="background:#eee;color:#8b8377">Lesson 0003 · Unit 1</span>
+  <span class="no" style="background:var(--surface-alt);color:var(--muted)">Lesson 0003 · Unit 1</span>
   <span class="t">Equations with Fractions</span>
   <span class="d">Clear the denominators first. Coming next — ask your tutor for it.</span>
 </div>
@@ -151,5 +148,6 @@ open this)</span></p>
 </footer>
 
 </div>
+<script src="assets/theme.js"></script>
 </body>
 </html>
