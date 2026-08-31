@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 0003 &mdash; Equations with Fractions</title>
+<script>(function(){try{var t=localStorage.getItem("alg7h:theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<link rel="stylesheet" href="../assets/theme.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+<div class="page">
+
+<header>
+  <span class="eyebrow">Lesson 0003 &middot; Unit 1 &mdash; Expressions and Equations</span>
+  <h1>Equations with Fractions</h1>
+  <p class="sub">Fractions look like the hard part. One move makes them vanish entirely.</p>
+</header>
+
+<p>Fractions in an equation look worse than they are. There is one move that makes
+them disappear completely, and once they're gone you're back to
+<a href="./0001-variables-both-sides.html">Lesson 0001</a> territory.</p>
+
+<div class="callout">
+  <p><strong>Multiply every term on both sides by the LCD</strong> &mdash; the least common
+  denominator of all the fractions in the equation. Every denominator divides out, and you're
+  left with an ordinary equation.</p>
+  <p>The word that does all the work there is <strong>every</strong>. The whole-number terms
+  get multiplied too. That is the entire lesson, and it's the one thing people forget.</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 1 &mdash; the LCD hits every term</div>
+  <table class="steps">
+    <tr><td class="eq"><span class="frac"><span class="num">x</span><span class="den">3</span></span> + <span class="frac"><span class="num">1</span><span class="den">2</span></span> = <span class="frac"><span class="num">5</span><span class="den">6</span></span></td><td class="why">Denominators are 3, 2 and 6. The LCD is <strong>6</strong>.</td></tr>
+    <tr><td class="eq">6&middot;<span class="frac"><span class="num">x</span><span class="den">3</span></span> + 6&middot;<span class="frac"><span class="num">1</span><span class="den">2</span></span> = 6&middot;<span class="frac"><span class="num">5</span><span class="den">6</span></span></td><td class="why">Multiply <em>each</em> term by 6 &mdash; all three of them.</td></tr>
+    <tr><td class="eq">2x + 3 = 5</td><td class="why">Every denominator divides out. No fractions left.</td></tr>
+    <tr><td class="eq">2x = 2</td><td class="why">Subtract 3 from both sides.</td></tr>
+    <tr class="final"><td class="eq">x = 1</td><td class="why">Divide by 2.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Check:</strong>
+  <span class="frac"><span class="num">1</span><span class="den">3</span></span> + <span class="frac"><span class="num">1</span><span class="den">2</span></span> = <span class="frac"><span class="num">2</span><span class="den">6</span></span> + <span class="frac"><span class="num">3</span><span class="den">6</span></span> = <span class="frac"><span class="num">5</span><span class="den">6</span></span>. &#10003;</p>
+</div>
+
+<div class="callout warn">
+  <h3>The mistake to inoculate yourself against</h3>
+  <p>Look at <span class="m"><span class="frac"><span class="num">x</span><span class="den">5</span></span> &minus; 1 = 2</span>. Multiplying by 5
+  has to hit the <span class="m">&minus;1</span> and the <span class="m">2</span> as well,
+  not just the fraction:</p>
+  <p style="margin:.6rem 0"><span class="m">x &minus; 5 = 10</span>, so
+  <span class="m">x = 15</span> &nbsp;&#10003;<br>
+  <span class="m">x &minus; 1 = 10</span>, so <span class="m">x = 11</span> &nbsp;&#10007;
+  &nbsp;<span style="color:var(--muted);font-size:.9rem">(the &minus;1 never got multiplied)</span></p>
+  <p>It's the same failure as forgetting to distribute in
+  <a href="./0002-distributing-negatives.html">Lesson 0002</a>: an operation that has to reach
+  <em>everything</em> only reached part of it.</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 2 &mdash; a fraction on each side</div>
+  <table class="steps">
+    <tr><td class="eq"><span class="frac"><span class="num">x + 1</span><span class="den">4</span></span> = <span class="frac"><span class="num">x &minus; 3</span><span class="den">2</span></span></td><td class="why">LCD of 4 and 2 is <strong>4</strong>.</td></tr>
+    <tr><td class="eq">x + 1 = 2(x &minus; 3)</td><td class="why">Multiply both sides by 4. The right side had a 2 on the bottom, so 4/2 = 2 is left over.</td></tr>
+    <tr><td class="eq">x + 1 = 2x &minus; 6</td><td class="why">Distribute &mdash; the parentheses matter here.</td></tr>
+    <tr class="final"><td class="eq">x = 7</td><td class="why">Subtract x, add 6.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Check:</strong> <span class="frac"><span class="num">8</span><span class="den">4</span></span> = 2 and
+  <span class="frac"><span class="num">4</span><span class="den">2</span></span> = 2. &#10003;</p>
+</div>
+
+<div class="callout good">
+  <h3>Finding the LCD fast</h3>
+  <p>Run through the multiples of the <em>largest</em> denominator and stop at the first one
+  the others all divide into. For 3, 4 and 6: try 6 (3&#10003; 4&#10007;), try 12
+  (3&#10003; 4&#10003; 6&#10003;) &mdash; the LCD is 12.</p>
+  <p>Multiplying all the denominators together always works too. It just leaves bigger
+  numbers to simplify later.</p>
+</div>
+
+<h2>Your turn</h2>
+<p>Eight problems. Type the value of <em>x</em>. Fractions are fine &mdash;
+<span class="m">9/2</span> and <span class="m">4.5</span> both work. Press Enter to check.</p>
+
+<div class="studentbar" id="studentbar"></div>
+
+<div class="scorebar">
+  <span id="scoretext">0 of 8</span>
+  <span class="track"><span id="bar"></span></span>
+</div>
+
+<div id="quiz"></div>
+
+<div id="done">
+  <h3 style="margin-top:0">That's the lesson.</h3>
+  <p>Fractions in an equation are now a one-step problem: find the LCD, multiply
+  <em>every</em> term, carry on as normal.</p>
+  <p><strong>Next:</strong></p>
+  <ul class="tight">
+    <li>Extra reps:
+      <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:solve-equations-inequalities">Khan
+      Academy &mdash; solving equations</a>.</li>
+    <li>Save your results below, then ask your tutor for
+      <a href="./0004-literal-equations.html">Lesson 0004</a> &mdash; solving for a variable
+      when there are no numbers at all.</li>
+  </ul>
+</div>
+
+<div class="savepanel" id="savepanel"></div>
+
+<div class="callout">
+  <h3>Write it like the rubric is watching</h3>
+  <ul class="tight">
+    <li><strong>Show the multiplication step.</strong> Write the line where every term gets
+      multiplied by the LCD. That line is the proof you knew what to do &mdash; skip it and a
+      grader can't tell whether you understood or guessed.</li>
+    <li><strong>State the LCD.</strong> One short phrase &mdash; "multiply both sides by 12" &mdash;
+      is exactly the kind of justification the syllabus asks for.</li>
+    <li>Check by substituting back into the <em>original</em> equation, fractions and all.</li>
+  </ul>
+</div>
+
+<footer>
+  <p><strong>Ask your tutor.</strong> If a problem still doesn't make sense after you read
+  the solution, say so &mdash; you'll get it explained a different way. Stuck on an
+  <em>assigned</em> problem? Don't paste it in; ask for a similar one with different numbers.</p>
+  <p><strong>Sources:</strong>
+  <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:solve-equations-inequalities/x2f8bb11595b61c86:linear-equations-variables-both-sides/v/solving-equations-with-the-distributive-property-2">Khan
+  Academy &mdash; equations with fractions</a> &middot;
+  <a href="https://openstax.org/details/books/elementary-algebra-2e">OpenStax,
+  <em>Elementary Algebra 2e</em></a></p>
+  <p>See also: <a href="./0001-variables-both-sides.html">Lesson 0001</a> &middot;
+  <a href="./0002-distributing-negatives.html">Lesson 0002</a> &middot;
+  <a href="../reference/COURSE-MAP.html">Course Map</a> &middot;
+  <a href="../reference/GLOSSARY.html">Glossary</a></p>
+</footer>
+
+</div>
+
+<script src="../assets/quiz.js"></script>
+<script>
+Quiz.mount({
+  lesson: "0003",
+  title:  "Equations with Fractions",
+  unit:   "Unit 1 \u2014 Expressions and Equations",
+  mount:  "#quiz",
+  problems: [
+  { prompt: "<span class='frac'><span class='num'>x</span><span class='den'>2</span></span> + <span class='frac'><span class='num'>x</span><span class='den'>4</span></span> = 3", answer: "4",
+    hint: "Denominators are 2 and 4, so the LCD is 4. Multiply all three terms by 4.",
+    commonErrors: [{ ans: "6", say: "Looks like only one fraction got multiplied. Multiplying every term by 4 gives 2x + x = 12, not x + x = 12." }],
+    sol: "x/2 + x/4 = 3\n4(x/2) + 4(x/4) = 4(3)   (LCD is 4 — multiply EVERY term)\n2x + x = 12\n3x = 12\nx = 4\n\nCheck: 4/2 + 4/4 = 2 + 1 = 3. ✓" },
+
+  { prompt: "<span class='frac'><span class='num'>x</span><span class='den'>5</span></span> − 1 = 2", answer: "15",
+    hint: "Multiply by 5 — and remember the −1 and the 2 get multiplied too.",
+    commonErrors: [{ ans: "11", say: "The −1 never got multiplied. 5 × (−1) = −5, so the equation becomes x − 5 = 10." }],
+    sol: "x/5 − 1 = 2\n5(x/5) − 5(1) = 5(2)   (every term)\nx − 5 = 10\nx = 15\n\nCheck: 15/5 − 1 = 3 − 1 = 2. ✓" },
+
+  { prompt: "<span class='frac'><span class='num'>x − 2</span><span class='den'>3</span></span> = 4", answer: "14",
+    hint: "Multiply both sides by 3. The whole numerator (x − 2) survives.",
+    commonErrors: [{ ans: "6", say: "The right side needs multiplying too: 3 × 4 = 12, so x − 2 = 12." }],
+    sol: "(x − 2)/3 = 4\nx − 2 = 12          (multiply both sides by 3)\nx = 14\n\nCheck: (14 − 2)/3 = 12/3 = 4. ✓" },
+
+  { prompt: "<span class='frac'><span class='num'>x</span><span class='den'>4</span></span> + <span class='frac'><span class='num'>1</span><span class='den'>3</span></span> = <span class='frac'><span class='num'>7</span><span class='den'>12</span></span>", answer: "1",
+    hint: "Denominators 4, 3 and 12 — the LCD is 12.",
+    whenWrong: "Multiply all three terms by 12: 12(x/4) = 3x, 12(1/3) = 4, 12(7/12) = 7.",
+    sol: "x/4 + 1/3 = 7/12\n12(x/4) + 12(1/3) = 12(7/12)   (LCD is 12)\n3x + 4 = 7\n3x = 3\nx = 1\n\nCheck: 1/4 + 1/3 = 3/12 + 4/12 = 7/12. ✓" },
+
+  { prompt: "<span class='frac'><span class='num'>x + 3</span><span class='den'>2</span></span> = <span class='frac'><span class='num'>x − 1</span><span class='den'>4</span></span>", answer: "-7",
+    hint: "LCD is 4. Keep the numerators in parentheses when you multiply.",
+    commonErrors: [{ ans: "-4", say: "The parentheses got lost. 4 × (x+3)/2 is 2(x+3) = 2x + 6, not 2x + 3." }],
+    sol: "(x + 3)/2 = (x − 1)/4\n4·(x+3)/2 = 4·(x−1)/4   (LCD is 4)\n2(x + 3) = x − 1\n2x + 6 = x − 1        (distribute)\nx = −7\n\nCheck: (−7+3)/2 = −4/2 = −2, and (−7−1)/4 = −8/4 = −2. ✓" },
+
+  { prompt: "<span class='frac'><span class='num'>3x</span><span class='den'>4</span></span> − <span class='frac'><span class='num'>x</span><span class='den'>2</span></span> = 1", answer: "4",
+    hint: "LCD is 4. Multiply the x/2 term by 4 as well — it becomes 2x.",
+    commonErrors: [{ ans: "2", say: "The second fraction only got its denominator dropped. 4 × (x/2) = 2x, so you get 3x − 2x = 4." }],
+    sol: "3x/4 − x/2 = 1\n4(3x/4) − 4(x/2) = 4(1)   (LCD is 4)\n3x − 2x = 4\nx = 4\n\nCheck: 12/4 − 4/2 = 3 − 2 = 1. ✓" },
+
+  { prompt: "<span class='frac'><span class='num'>2</span><span class='den'>3</span></span>x + 1 = 4", answer: "9/2",
+    hint: "Subtract 1 first, then undo the 2/3. Dividing by 2/3 is the same as multiplying by 3/2.",
+    commonErrors: [{ ans: "2", say: "You multiplied by 2/3 instead of dividing by it. To undo ×(2/3), multiply by the reciprocal 3/2: 3 × 3/2 = 9/2." }],
+    sol: "(2/3)x + 1 = 4\n(2/3)x = 3              (subtract 1)\nx = 3 ÷ (2/3)\nx = 3 × (3/2) = 9/2 = 4.5\n\nOr clear the fraction first: multiply everything by 3 → 2x + 3 = 12 → 2x = 9 → x = 9/2.\n\nCheck: (2/3)(9/2) = 3, and 3 + 1 = 4. ✓" },
+
+  { prompt: "<span class='frac'><span class='num'>x</span><span class='den'>6</span></span> + <span class='frac'><span class='num'>x</span><span class='den'>3</span></span> = <span class='frac'><span class='num'>5</span><span class='den'>2</span></span>", answer: "5",
+    hint: "Denominators 6, 3 and 2 — the LCD is 6. Don't forget the right-hand side.",
+    commonErrors: [{ ans: "5/6", say: "The 5/2 on the right needs multiplying by 6 too: 6 × 5/2 = 15, not 5/2." }],
+    sol: "x/6 + x/3 = 5/2\n6(x/6) + 6(x/3) = 6(5/2)   (LCD is 6 — all three terms)\nx + 2x = 15\n3x = 15\nx = 5\n\nCheck: 5/6 + 5/3 = 5/6 + 10/6 = 15/6 = 5/2. ✓" }
+  ]
+});
+</script>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 0005 &mdash; Turning Words into Equations</title>
+<script>(function(){try{var t=localStorage.getItem("alg7h:theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<link rel="stylesheet" href="../assets/theme.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+<div class="page">
+
+<header>
+  <span class="eyebrow">Lesson 0005 &middot; Unit 1 &mdash; Expressions and Equations</span>
+  <h1>Turning Words into Equations</h1>
+  <p class="sub">The last piece of Unit 1 &mdash; and the part the syllabus grades hardest.</p>
+</header>
+
+<p>This is the last piece of Unit 1, and it's the one the syllabus cares about most:
+&ldquo;model real-world situations using algebraic expressions.&rdquo; Every unit test will
+have these, and they're where good algebra students lose marks &mdash; not because the algebra
+is hard, but because they translated the sentence wrong before they started.</p>
+
+<div class="callout">
+  <p><strong>Three steps, every single time:</strong></p>
+  <ol style="margin:.5rem 0 0;padding-left:1.3rem">
+    <li><strong>Name the unknown.</strong> Write "Let <span class="m">n</span> = &hellip;"
+      and say exactly what it is. This one line prevents most word-problem errors.</li>
+    <li><strong>Translate phrase by phrase</strong>, left to right, into symbols.</li>
+    <li><strong>Solve, then answer the actual question</strong> &mdash; which is often not
+      the variable you solved for.</li>
+  </ol>
+</div>
+
+<h2>The translation table</h2>
+<p>Almost every word problem is built from these. The ones in the last column are where
+people get caught.</p>
+
+<table class="steps" style="width:100%;margin:1rem 0">
+  <tr><td class="eq" style="width:1%"><strong>+</strong></td>
+      <td class="why" style="padding-left:1rem">more than &middot; sum &middot; increased by &middot; total &middot; together</td></tr>
+  <tr><td class="eq"><strong>&minus;</strong></td>
+      <td class="why" style="padding-left:1rem">less than &middot; difference &middot; decreased by &middot; fewer than &middot; take away</td></tr>
+  <tr><td class="eq"><strong>&times;</strong></td>
+      <td class="why" style="padding-left:1rem">times &middot; twice (&times;2) &middot; product &middot; of &middot; per &middot; each</td></tr>
+  <tr><td class="eq"><strong>&divide;</strong></td>
+      <td class="why" style="padding-left:1rem">quotient &middot; per &middot; split &middot; shared equally</td></tr>
+  <tr><td class="eq"><strong>=</strong></td>
+      <td class="why" style="padding-left:1rem">is &middot; equals &middot; will be &middot; results in &middot; gives</td></tr>
+</table>
+
+<div class="callout warn">
+  <h3>&ldquo;Less than&rdquo; reverses the order. Always.</h3>
+  <p><span class="m">5 less than n</span> is <span class="m">n &minus; 5</span> &mdash;
+  <strong>not</strong> <span class="m">5 &minus; n</span>.</p>
+  <p>Think about what it means: you have <span class="m">n</span>, and you take 5 away.
+  Say it with numbers to feel it: &ldquo;5 less than 20&rdquo; is 15, and
+  <span class="m">20 &minus; 5 = 15</span>. If you wrote
+  <span class="m">5 &minus; 20</span> you'd get &minus;15, which is obviously wrong.</p>
+  <p>The same reversal hits <strong>&ldquo;fewer than&rdquo;</strong> and
+  <strong>&ldquo;subtracted from&rdquo;</strong>. Everything else translates left to right;
+  these don't.</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 1 &mdash; translating a sentence</div>
+  <p style="margin:.2rem 0 .8rem;font-style:italic">&ldquo;Seven more than twice a number is 23.
+  Find the number.&rdquo;</p>
+  <table class="steps">
+    <tr><td class="eq">Let n = the number</td><td class="why">Step 1 &mdash; always name it first.</td></tr>
+    <tr><td class="eq">twice a number &rarr; 2n</td><td class="why">"Twice" means &times;2.</td></tr>
+    <tr><td class="eq">seven more than that &rarr; 2n + 7</td><td class="why">"More than" adds &mdash; and adding is safe in either order.</td></tr>
+    <tr><td class="eq">2n + 7 = 23</td><td class="why">"Is" becomes the equals sign.</td></tr>
+    <tr><td class="eq">2n = 16</td><td class="why">Subtract 7.</td></tr>
+    <tr class="final"><td class="eq">n = 8</td><td class="why">Divide by 2. <em>The number is 8.</em></td></tr>
+  </table>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 2 &mdash; a real situation</div>
+  <p style="margin:.2rem 0 .8rem;font-style:italic">&ldquo;A gym charges a $30 joining fee plus
+  $15 per month. After how many months will you have paid $150?&rdquo;</p>
+  <table class="steps">
+    <tr><td class="eq">Let m = number of months</td><td class="why">Name it, with units.</td></tr>
+    <tr><td class="eq">30 + 15m = 150</td><td class="why">$30 once, plus $15 for each of <span class="m">m</span> months. "Per" signals multiplication.</td></tr>
+    <tr><td class="eq">15m = 120</td><td class="why">Subtract the one-time fee.</td></tr>
+    <tr class="final"><td class="eq">m = 8</td><td class="why">Divide by 15. <em>After 8 months.</em></td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Notice:</strong> the one-time fee is a plain number and the
+  repeating charge is attached to the variable. Nearly every "fee plus rate" problem has that
+  shape &mdash; and so does <span class="m">y = mx + b</span>, which you'll meet in Unit 3.</p>
+</div>
+
+<div class="callout good">
+  <h3>When two things are related, define <em>one</em> variable</h3>
+  <p>&ldquo;Alex has twice as many stickers as Sam.&rdquo; Don't use two letters. Let
+  <span class="m">s</span> = Sam's stickers; then Alex has <span class="m">2s</span>.
+  One unknown, one equation.</p>
+  <p>Pick the <strong>smaller</strong> quantity as your variable &mdash; the one the other is
+  described in terms of. It keeps the numbers positive and the algebra simple.</p>
+</div>
+
+<h2>Your turn</h2>
+<p>Eight problems. The first three ask you to <strong>pick the equation</strong>
+that matches the sentence &mdash; click an option. The rest ask for a <strong>number</strong>:
+set up the equation yourself, solve it, and type the answer to the question that was asked.</p>
+
+<div class="studentbar" id="studentbar"></div>
+
+<div class="scorebar">
+  <span id="scoretext">0 of 8</span>
+  <span class="track"><span id="bar"></span></span>
+</div>
+
+<div id="quiz"></div>
+
+<div id="done">
+  <h3 style="margin-top:0">That's Unit 1 complete.</h3>
+  <p>Across five lessons you can now solve equations with the variable on both sides, distribute
+  negatives without losing a sign, clear fractions, rearrange any formula, and turn a sentence
+  into an equation. That is the entire first unit of the course.</p>
+  <p><strong>Next:</strong></p>
+  <ul class="tight">
+    <li>Save your results below &mdash; then your tutor can see which of the five lessons
+      actually gave you trouble, and drill exactly that before the unit test.</li>
+    <li>Ask for Unit 2, Inequalities. It starts with one rule that catches everybody:
+      multiplying or dividing by a negative <em>flips</em> the sign.</li>
+  </ul>
+</div>
+
+<div class="savepanel" id="savepanel"></div>
+
+<div class="callout">
+  <h3>Write it like the rubric is watching</h3>
+  <p>Word problems are where the syllabus's "communicate mathematical reasoning clearly"
+  actually gets graded. A bare number at the bottom of the page loses marks even when it's
+  right. Four lines get you full credit:</p>
+  <ul class="tight">
+    <li><strong>Define the variable.</strong> "Let <span class="m">w</span> = the width in cm."
+      Not just "<span class="m">w</span>" &mdash; say what it is and its units.</li>
+    <li><strong>Write the equation.</strong> On its own line.</li>
+    <li><strong>Solve it,</strong> showing the steps.</li>
+    <li><strong>Answer the question in a sentence,</strong> with units:
+      "The width is 9 cm." The question asked for a width, not for
+      <span class="m">w = 9</span>.</li>
+  </ul>
+  <p>That last line also catches your own errors: if the sentence sounds absurd &mdash; a
+  negative width, 2.5 people &mdash; you know to go back.</p>
+</div>
+
+<footer>
+  <p><strong>Ask your tutor.</strong> If a problem still doesn't make sense after you read
+  the solution, say so &mdash; you'll get it explained a different way. Stuck on an
+  <em>assigned</em> problem? Don't paste it in; ask for a similar one with different numbers.</p>
+  <p><strong>Sources:</strong>
+  <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:solve-equations-inequalities">Khan
+  Academy &mdash; solving equations &amp; inequalities</a> &middot;
+  <a href="https://openstax.org/details/books/elementary-algebra-2e">OpenStax,
+  <em>Elementary Algebra 2e</em></a></p>
+  <p>See also: <a href="./0001-variables-both-sides.html">Lesson 0001</a> &middot;
+  <a href="./0002-distributing-negatives.html">Lesson 0002</a> &middot;
+  <a href="../reference/COURSE-MAP.html">Course Map</a> &middot;
+  <a href="../reference/GLOSSARY.html">Glossary</a></p>
+</footer>
+
+</div>
+
+<script src="../assets/quiz.js"></script>
+<script>
+Quiz.mount({
+  lesson: "0005",
+  title:  "Turning Words into Equations",
+  unit:   "Unit 1 \u2014 Expressions and Equations",
+  mount:  "#quiz",
+  problems: [
+  { type: "choice",
+    prompt: "&ldquo;Six less than a number <em>n</em> is 14.&rdquo;",
+    options: ["n − 6 = 14", "6 − n = 14", "6n = 14", "n + 6 = 14"],
+    answer: 0,
+    optionFeedback: [
+      "Right. \"Less than\" reverses the order: start from n, take 6 away.",
+      "This is the classic trap. \"6 less than n\" starts from n and removes 6, so it is n − 6. Test it with numbers: 6 less than 20 is 14, and 20 − 6 = 14.",
+      "That is six TIMES n. \"Less than\" is subtraction, not multiplication.",
+      "\"Less than\" subtracts. This one adds."],
+    hint: "Say it with a real number first: what is 6 less than 20?",
+    sol: "Let n = the number.\n\"Six less than n\"  →  n − 6\n\"is 14\"           →  = 14\n\nEquation: n − 6 = 14   (so n = 20)\n\n\"Less than\" is one of the few phrases that reverses the order." },
+
+  { type: "choice",
+    prompt: "&ldquo;Twice the sum of a number and 5 is 26.&rdquo;",
+    options: ["2n + 5 = 26", "2(n + 5) = 26", "n + 2(5) = 26", "2n + 5n = 26"],
+    answer: 1,
+    optionFeedback: [
+      "Close, but this doubles only the number. \"The sum of a number and 5\" is a single quantity — (n + 5) — and ALL of it gets doubled.",
+      "Right. The parentheses keep \"the sum\" together so that twice applies to the whole thing.",
+      "This doubles the 5 instead of the sum.",
+      "This treats 5 as another n. The 5 is just five."],
+    hint: "What exactly is being doubled? Find that phrase and put parentheses around it.",
+    sol: "Let n = the number.\n\"the sum of a number and 5\"  →  (n + 5)\n\"twice\" that                →  2(n + 5)\n\"is 26\"                     →  = 26\n\nEquation: 2(n + 5) = 26\n2n + 10 = 26  →  2n = 16  →  n = 8\n\nWhen a phrase names a whole quantity, parenthesise it before you do anything to it." },
+
+  { type: "choice",
+    prompt: "&ldquo;A number decreased by 8 equals 3 times the number.&rdquo;",
+    options: ["8 − n = 3n", "n − 8 = n + 3", "n − 8 = 3n", "3n − 8 = n"],
+    answer: 2,
+    optionFeedback: [
+      "\"Decreased by 8\" starts from the number: n − 8, not 8 − n.",
+      "\"3 times the number\" is 3n, not n + 3.",
+      "Right — and notice this one has the variable on both sides, which is Lesson 0001.",
+      "The decrease applies to the number itself, not to 3 times it."],
+    hint: "Translate each side separately, then join them with the equals sign.",
+    sol: "Let n = the number.\n\"A number decreased by 8\"  →  n − 8\n\"equals\"                   →  =\n\"3 times the number\"       →  3n\n\nEquation: n − 8 = 3n\n−8 = 2n  →  n = −4\n\nCheck: −4 − 8 = −12, and 3(−4) = −12. ✓" },
+
+  { prompt: "&ldquo;Seven more than twice a number is 23. What is the number?&rdquo;",
+    answer: "8", placeholder: "the number",
+    hint: "Let n be the number. \"Twice\" it, then seven more, equals 23.",
+    commonErrors: [{ ans: "15", say: "Looks like you solved n + 7 = 23 — but it is TWICE the number plus seven: 2n + 7 = 23." }],
+    sol: "Let n = the number.\n2n + 7 = 23\n2n = 16\nn = 8\n\nThe number is 8.  Check: 2(8) + 7 = 23. ✓" },
+
+  { prompt: "&ldquo;Five less than three times a number is 16. What is the number?&rdquo;",
+    answer: "7", placeholder: "the number",
+    hint: "\"Three times a number\" is 3n. Then five LESS than that.",
+    commonErrors: [{ ans: "-11/3", say: "You wrote 5 − 3n = 16. \"Five less than 3n\" starts from 3n and takes 5 away: 3n − 5 = 16." }],
+    sol: "Let n = the number.\n3n − 5 = 16\n3n = 21\nn = 7\n\nThe number is 7.  Check: 3(7) − 5 = 16. ✓" },
+
+  { prompt: "&ldquo;A gym charges a $30 joining fee plus $15 per month. After how many months will you have paid $150?&rdquo;",
+    answer: "8", placeholder: "months",
+    hint: "The $30 happens once. The $15 happens every month — attach it to the variable.",
+    commonErrors: [{ ans: "10", say: "That is 150 ÷ 15, which forgets the one-time $30 fee. Subtract it first: 150 − 30 = 120, then divide by 15." }],
+    sol: "Let m = number of months.\n30 + 15m = 150\n15m = 120\nm = 8\n\nAfter 8 months.  Check: 30 + 15(8) = 30 + 120 = 150. ✓" },
+
+  { prompt: "&ldquo;A rectangle has perimeter 46 cm. Its length is 5 cm more than its width. Find the <strong>width</strong>.&rdquo;",
+    answer: "9", placeholder: "width in cm",
+    hint: "Let w = the width. Then the length is w + 5. Perimeter is 2(length) + 2(width).",
+    commonErrors: [
+      { ans: "14", say: "That is the LENGTH. The question asks for the width — w = 9, and the length is w + 5 = 14. Always re-read what was asked." },
+      { ans: "18", say: "Check your perimeter formula: it is 2l + 2w, so both sides get counted twice." }],
+    sol: "Let w = the width in cm. Then the length is w + 5.\n2(w + 5) + 2w = 46\n2w + 10 + 2w = 46      (distribute)\n4w + 10 = 46\n4w = 36\nw = 9\n\nThe width is 9 cm.  Check: length 14, perimeter 2(14) + 2(9) = 46. ✓\n\nNote the trap: 14 is the length, not the answer to the question." },
+
+  { prompt: "&ldquo;Alex has twice as many stickers as Sam. Together they have 42. How many does <strong>Sam</strong> have?&rdquo;",
+    answer: "14", placeholder: "Sam's stickers",
+    hint: "Use ONE variable. Let s = Sam's stickers; then Alex has 2s. Together means add.",
+    commonErrors: [
+      { ans: "28", say: "That is Alex's total. Sam has s = 14 and Alex has 2s = 28. The question asks about Sam." },
+      { ans: "21", say: "That splits 42 evenly, but they do not have equal amounts — Alex has twice as many." }],
+    sol: "Let s = Sam's stickers. Then Alex has 2s.\ns + 2s = 42\n3s = 42\ns = 14\n\nSam has 14.  Check: Sam 14, Alex 28, together 42. ✓\n\nPick the SMALLER quantity as your variable — the one the other is described against." }
+  ]
+});
+</script>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

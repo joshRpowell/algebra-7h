@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 0004 &mdash; Solving for a Variable</title>
+<script>(function(){try{var t=localStorage.getItem("alg7h:theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<link rel="stylesheet" href="../assets/theme.css">
+<link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+<div class="page">
+
+<header>
+  <span class="eyebrow">Lesson 0004 &middot; Unit 1 &mdash; Expressions and Equations</span>
+  <h1>Solving for a Variable</h1>
+  <p class="sub">Formulas with no numbers in them. The same moves you already know &mdash; the other letters just come along.</p>
+</header>
+
+<p>So far every equation had one letter in it. Now they all have letters &mdash;
+<span class="m">A = &frac12;bh</span>, <span class="m">d = rt</span>,
+<span class="m">y = mx + b</span>. These are called <strong>literal equations</strong>, and
+they look much harder than they are.</p>
+
+<div class="callout">
+  <p><strong>Nothing new happens here.</strong> You use exactly the same moves as always:
+  do the same thing to both sides until the letter you want is alone. The other letters just
+  come along for the ride &mdash; treat them as if they were numbers you haven't been told yet.</p>
+  <p>If you can solve <span class="m">12 = 3x</span> by dividing both sides by 3, you can
+  solve <span class="m">A = bh</span> for <span class="m">b</span> by dividing both sides by
+  <span class="m">h</span>. It's the same step.</p>
+</div>
+
+<div class="callout good">
+  <h3>The trick that makes these easy</h3>
+  <p>Stuck on a formula? <strong>Solve the number version first, then copy your own steps.</strong></p>
+  <p style="margin:.7rem 0">Solve <span class="m">A = bh</span> for <span class="m">b</span>?
+  Pretend it's <span class="m">12 = b &middot; 4</span>. You'd divide both sides by 4. So
+  divide both sides by <span class="m">h</span>: <span class="m">b = A/h</span>. Done.</p>
+  <p>Whatever you did to the number, do to the letter. This works on every problem below.</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 1 &mdash; one division</div>
+  <table class="steps">
+    <tr><td class="eq">d = rt</td><td class="why">Solve for <span class="m">t</span>. It's multiplied by <span class="m">r</span>.</td></tr>
+    <tr><td class="eq">d/r = rt/r</td><td class="why">Divide <strong>both sides</strong> by <span class="m">r</span> &mdash; the inverse of multiplying.</td></tr>
+    <tr class="final"><td class="eq">t = d/r</td><td class="why">The <span class="m">r</span>'s cancel on the right. Write the answer with <span class="m">t</span> on the left.</td></tr>
+  </table>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 2 &mdash; a fraction in the way</div>
+  <table class="steps">
+    <tr><td class="eq">A = &frac12;bh</td><td class="why">Solve for <span class="m">h</span>. Clear the fraction first (same move as <a href="./0003-equations-with-fractions.html">Lesson 0003</a>).</td></tr>
+    <tr><td class="eq">2A = bh</td><td class="why">Multiply both sides by 2.</td></tr>
+    <tr class="final"><td class="eq">h = 2A/b</td><td class="why">Divide both sides by <span class="m">b</span>.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Sanity check:</strong> a triangle with
+  <span class="m">A = 12</span> and <span class="m">b = 6</span> should have
+  <span class="m">h = 24/6 = 4</span>. And &frac12;(6)(4) = 12. &#10003;</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 3 &mdash; two steps, order matters</div>
+  <table class="steps">
+    <tr><td class="eq">P = 2l + 2w</td><td class="why">Solve for <span class="m">w</span>.</td></tr>
+    <tr><td class="eq">P &minus; 2l = 2w</td><td class="why">Subtract <span class="m">2l</span> first &mdash; undo addition before multiplication.</td></tr>
+    <tr class="final"><td class="eq">w = (P &minus; 2l)/2</td><td class="why">Divide by 2. The parentheses are <strong>required</strong>: the whole numerator gets divided.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Also correct:</strong> <span class="m">w = P/2 &minus; l</span>
+  &mdash; the same thing, just simplified further. Both earn full credit.</p>
+</div>
+
+<div class="callout warn">
+  <h3>The one that costs marks: dropping parentheses</h3>
+  <p>When you divide a <em>sum</em> by something, every part of the sum gets divided:</p>
+  <p style="margin:.6rem 0"><span class="m">(P &minus; 2l)/2</span> &nbsp;&#10003;
+  &nbsp;&nbsp; <span class="m">P &minus; 2l/2 = P &minus; l</span> &nbsp;&#10007;</p>
+  <p>The second one only divided part of the numerator. If you're ever unsure, plug in
+  numbers: with <span class="m">P = 20, l = 4</span>, the correct answer gives
+  <span class="m">w = 6</span> and the wrong one gives <span class="m">16</span>. A rectangle
+  with perimeter 20 can't have a side of 16.</p>
+</div>
+
+<h2>Your turn</h2>
+<p>Eight formulas. Type the expression the variable equals &mdash; just the
+right-hand side, not <span class="m">b = </span>. Write division with a slash and use
+parentheses when you need them: <span class="m">2A/b</span>, <span class="m">(P-2w)/2</span>,
+<span class="m">V/(lh)</span>. Any correct form is accepted &mdash; <span class="m">P/2-w</span>
+and <span class="m">(P-2w)/2</span> are both right.</p>
+
+<div class="studentbar" id="studentbar"></div>
+
+<div class="scorebar">
+  <span id="scoretext">0 of 8</span>
+  <span class="track"><span id="bar"></span></span>
+</div>
+
+<div id="quiz"></div>
+
+<div id="done">
+  <h3 style="margin-top:0">That's the lesson.</h3>
+  <p>You can now rearrange any formula &mdash; which is most of what algebra actually gets
+  used for outside a classroom. Every science class you ever take will assume you can do this.</p>
+  <p><strong>Next:</strong> save your results below, then ask your tutor for
+    <a href="./0005-word-problems.html">Lesson 0005</a> &mdash; turning a sentence into an
+    equation, the last piece of Unit 1.</p>
+</div>
+
+<div class="savepanel" id="savepanel"></div>
+
+<div class="callout">
+  <h3>Write it like the rubric is watching</h3>
+  <ul class="tight">
+    <li><strong>Say which variable you're solving for</strong> before you start. One line:
+      "Solve for h." It costs nothing and shows the grader you know what the goal is.</li>
+    <li><strong>Every step needs both sides.</strong> These problems are pure
+      properties-of-equality &mdash; that's the justification to name if asked.</li>
+    <li>Finish with the variable <em>alone on the left</em>: write
+      <span class="m">h = 2A/b</span>, not <span class="m">2A/b = h</span>. Same maths,
+      but the first is the answer to the question that was asked.</li>
+  </ul>
+</div>
+
+<footer>
+  <p><strong>Ask your tutor.</strong> If a problem still doesn't make sense after you read
+  the solution, say so &mdash; you'll get it explained a different way. Stuck on an
+  <em>assigned</em> problem? Don't paste it in; ask for a similar one with different numbers.</p>
+  <p><strong>Sources:</strong>
+  <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:solve-equations-inequalities">Khan
+  Academy &mdash; solving equations &amp; inequalities</a> &middot;
+  <a href="https://openstax.org/details/books/elementary-algebra-2e">OpenStax,
+  <em>Elementary Algebra 2e</em></a></p>
+  <p>See also: <a href="./0001-variables-both-sides.html">Lesson 0001</a> &middot;
+  <a href="./0002-distributing-negatives.html">Lesson 0002</a> &middot;
+  <a href="../reference/COURSE-MAP.html">Course Map</a> &middot;
+  <a href="../reference/GLOSSARY.html">Glossary</a></p>
+</footer>
+
+</div>
+
+<script src="../assets/quiz.js"></script>
+<script>
+Quiz.mount({
+  lesson: "0004",
+  title:  "Solving for a Variable",
+  unit:   "Unit 1 \u2014 Expressions and Equations",
+  mount:  "#quiz",
+  problems: [
+  { prompt: "d = rt&nbsp;&nbsp;&nbsp;solve for <strong>r</strong>", answer: "d/t", vars: ["d","t"],
+    placeholder: "e.g.  d/t",
+    hint: "r is multiplied by t. What undoes multiplying by t?",
+    whenWrong: "Divide both sides by t. Careful which letter ends up on top — d is the one being divided.",
+    sol: "d = rt\nd/t = rt/t      (divide both sides by t)\nr = d/t\n\nSanity check: d = 100, t = 2 gives r = 50 — and 50 × 2 = 100. ✓" },
+
+  { prompt: "A = &frac12;bh&nbsp;&nbsp;&nbsp;solve for <strong>h</strong>", answer: "2A/b", vars: ["A","b"],
+    placeholder: "e.g.  2A/b",
+    hint: "Clear the fraction first: multiply both sides by 2. Then divide by b.",
+    whenWrong: "Two steps: multiply both sides by 2 to get 2A = bh, then divide both sides by b.",
+    sol: "A = ½bh\n2A = bh          (multiply both sides by 2)\nh = 2A/b         (divide both sides by b)\n\nSanity check: A = 12, b = 6 gives h = 24/6 = 4, and ½(6)(4) = 12. ✓" },
+
+  { prompt: "P = 2l + 2w&nbsp;&nbsp;&nbsp;solve for <strong>l</strong>", answer: "(P-2w)/2", vars: ["P","w"],
+    placeholder: "e.g.  (P-2w)/2",
+    hint: "Subtract 2w from both sides first, then divide everything by 2.",
+    whenWrong: "Undo the addition before the multiplication. And when you divide, the WHOLE left side gets divided — you need parentheses.",
+    sol: "P = 2l + 2w\nP − 2w = 2l           (subtract 2w)\nl = (P − 2w)/2        (divide both sides by 2)\n\nAlso correct: l = P/2 − w.\n\nSanity check: P = 20, w = 4 gives l = 12/2 = 6, and 2(6) + 2(4) = 20. ✓" },
+
+  { prompt: "y = mx + b&nbsp;&nbsp;&nbsp;solve for <strong>m</strong>", answer: "(y-b)/x", vars: ["y","b","x"],
+    placeholder: "e.g.  (y-b)/x",
+    hint: "Subtract b first. Then m is multiplied by x — divide it off.",
+    whenWrong: "Subtract b from both sides to get y − b = mx, then divide both sides by x. The whole y − b goes on top.",
+    sol: "y = mx + b\ny − b = mx        (subtract b)\nm = (y − b)/x    (divide both sides by x)\n\nThis is the slope formula in disguise — you'll meet it again in Unit 3." },
+
+  { prompt: "I = Prt&nbsp;&nbsp;&nbsp;solve for <strong>r</strong>", answer: "I/(Pt)", vars: ["I","P","t"],
+    placeholder: "e.g.  I/(Pt)",
+    hint: "r is multiplied by both P and t. Divide both sides by both of them.",
+    whenWrong: "Divide by P and by t. Both belong in the denominator: I/(Pt), not (I/P)t.",
+    sol: "I = Prt\nI/(Pt) = Prt/(Pt)   (divide both sides by Pt)\nr = I/(Pt)\n\nThis is the simple-interest formula. Sanity check: I = 60, P = 1000, t = 3\ngives r = 60/3000 = 0.02, i.e. 2% — and 1000 × 0.02 × 3 = 60. ✓" },
+
+  { prompt: "V = lwh&nbsp;&nbsp;&nbsp;solve for <strong>w</strong>", answer: "V/(lh)", vars: ["V","l","h"],
+    placeholder: "e.g.  V/(lh)",
+    hint: "Same shape as the last one: two letters to divide off.",
+    whenWrong: "Both l and h go underneath: V/(lh). Writing V/l·h would multiply by h instead of dividing.",
+    sol: "V = lwh\nw = V/(lh)      (divide both sides by lh)\n\nSanity check: a 2 × 3 × 4 box has V = 24, so w = 24/(2×4) = 3. ✓" },
+
+  { prompt: "ax + b = c&nbsp;&nbsp;&nbsp;solve for <strong>x</strong>", answer: "(c-b)/a", vars: ["a","b","c"],
+    placeholder: "e.g.  (c-b)/a",
+    hint: "This is every two-step equation you have ever solved, with letters instead of numbers.",
+    whenWrong: "Subtract b from both sides, then divide by a. The whole c − b goes on top.",
+    sol: "ax + b = c\nax = c − b        (subtract b)\nx = (c − b)/a     (divide by a)\n\nThis is the general form of every two-step equation.\nWith a = 3, b = 5, c = 20 it gives x = 15/3 = 5 — the same answer as solving 3x + 5 = 20." },
+
+  { prompt: "F = <span class='frac'><span class='num'>9</span><span class='den'>5</span></span>C + 32&nbsp;&nbsp;&nbsp;solve for <strong>C</strong>", answer: "5(F-32)/9", vars: ["F"],
+    placeholder: "e.g.  5(F-32)/9",
+    hint: "Subtract 32 first. Then undo ×(9/5) by multiplying by the reciprocal 5/9.",
+    whenWrong: "Subtract 32 before you touch the fraction. Then multiply by 5/9 (the reciprocal), not by 9/5.",
+    sol: "F = (9/5)C + 32\nF − 32 = (9/5)C          (subtract 32)\n(5/9)(F − 32) = C        (multiply by the reciprocal 5/9)\nC = 5(F − 32)/9\n\nThis is the real Fahrenheit-to-Celsius formula.\nSanity check: F = 212 gives C = 5(180)/9 = 100. Boiling point. ✓" }
+  ]
+});
+</script>
+<script src="../assets/theme.js"></script>
+</body>
+</html>

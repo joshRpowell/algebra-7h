@@ -58,6 +58,7 @@
    * into {a, b} for ax + b. Returns null if it is not a plain linear expression,
    * so anything unusual falls through to a literal string comparison. */
   function parseLinear(s) {
+    s = s.replace(/\*/g, "");           // "2*x" reads the same as "2x" here
     if (!/x/.test(s)) return null;
     if (!/^[-+0-9x.]*$/.test(s)) return null;          // no parens, no other letters
     var terms = s.replace(/-/g, "+-").split("+").filter(function (t) { return t !== ""; });
@@ -80,15 +81,117 @@
     return { a: a, b: b };
   }
 
+  /* A tiny expression evaluator, used two ways:
+   *   - with no variables, to accept fraction/arithmetic answers ("9/2" == "4.5")
+   *   - with variables, to grade formula answers by NUMERIC EQUIVALENCE, so
+   *     "2A/b", "(2A)/b" and "2*A/b" all count as the same answer.
+   * Variables are SINGLE letters, so "lh" parses as l times h.
+   * Supports + - * / ^, parentheses, unary minus, and implicit multiplication. */
+  function evalExpr(src, env) {
+    var s = String(src).replace(/[\u2212\u2013\u2014]/g, "-")
+                       .replace(/[\u00b7\u00d7]/g, "*")
+                       .replace(/\u00f7/g, "/")
+                       .replace(/\s+/g, "");
+    var i = 0;
+    function peek() { return i < s.length ? s.charAt(i) : ""; }
+    function atom() {
+      var c = peek();
+      if (c === "(") {
+        i++; var v = expr();
+        if (peek() !== ")") throw 0;
+        i++; return v;
+      }
+      if (/[0-9.]/.test(c)) {
+        var st = i;
+        while (i < s.length && /[0-9.]/.test(s.charAt(i))) i++;
+        var n = parseFloat(s.slice(st, i));
+        if (isNaN(n)) throw 0;
+        return n;
+      }
+      if (/[A-Za-z]/.test(c)) {           // single-letter variable
+        i++;
+        if (!Object.prototype.hasOwnProperty.call(env, c)) throw 0;
+        return env[c];
+      }
+      throw 0;
+    }
+    function power() {
+      var b = atom();
+      if (peek() === "^") { i++; return Math.pow(b, unary()); }
+      return b;
+    }
+    function unary() {
+      if (peek() === "-") { i++; return -unary(); }
+      if (peek() === "+") { i++; return unary(); }
+      return power();
+    }
+    /* Juxtaposition binds tighter than * and /, the way it reads on paper:
+     * V/lh means V/(l*h), while V/l*h means (V/l)*h. */
+    function chain() {
+      var v = unary();
+      for (;;) {
+        var c = peek();
+        if (c && /[0-9.A-Za-z(]/.test(c)) v *= power();
+        else break;
+      }
+      return v;
+    }
+    function term() {
+      var v = chain();
+      for (;;) {
+        var c = peek();
+        if (c === "*") { i++; v *= chain(); }
+        else if (c === "/") { i++; v /= chain(); }
+        else break;
+      }
+      return v;
+    }
+    function expr() {
+      var v = term();
+      for (;;) {
+        var c = peek();
+        if (c === "+") { i++; v += term(); }
+        else if (c === "-") { i++; v -= term(); }
+        else break;
+      }
+      return v;
+    }
+    try {
+      var out = expr();
+      return (i === s.length) ? out : NaN;
+    } catch (e) { return NaN; }
+  }
+
+  /* Two formulas are equivalent if they agree at several sampled points.
+   * Sampling is deterministic so a lesson grades the same way every time. */
+  function equivalent(a, b, vars) {
+    var matched = 0;
+    for (var trial = 0; trial < 30 && matched < 6; trial++) {
+      var env = {};
+      for (var v = 0; v < vars.length; v++) {
+        env[vars[v]] = 2 + ((trial * 7 + v * 5) % 11) + (trial % 4) * 0.25;
+      }
+      var x = evalExpr(a, env), y = evalExpr(b, env);
+      if (!isFinite(x) || !isFinite(y)) continue;
+      if (Math.abs(x - y) > 1e-9 * Math.max(1, Math.abs(x), Math.abs(y))) return false;
+      matched++;
+    }
+    return matched >= 3;
+  }
+
   function normalize(raw) {
     var s = String(raw).toLowerCase().trim()
       .replace(/[−–—]/g, "-")      // unicode minus / dashes -> hyphen
-      .replace(/\u00b7|\*/g, "")   // stray multiplication marks
+      .replace(/[\u00b7\u00d7]/g, "*")   // \u00b7 / \u00d7 -> *
       .replace(/[\s,]/g, "");
     if (NONE.indexOf(s) > -1) return "none";
     if (ALL.indexOf(s)  > -1) return "all";
     s = s.replace(/^x=/, "");
     if (/^[+-]?\d+(\.\d+)?$/.test(s)) return String(parseFloat(s));
+    if (/^[-+*/^().0-9]+$/.test(s) && /[\/*^()]/.test(s)) {   // "9/2", "(1+2)/2", "2^3"
+      var val = evalExpr(s, {});
+      if (isFinite(val)) return String(Math.round(val * 1e10) / 1e10);
+    }
     var lin = parseLinear(s);
     if (lin) return lin.a + "x" + (lin.b >= 0 ? "+" : "") + lin.b;   // canonical ax+b
     return s;
@@ -141,16 +244,28 @@
     this.P.forEach(function (p, i) {
       var el = document.createElement("div");
       el.className = "q"; el.id = "q" + i;
+      var controls = p.type === "choice"
+        ? '<div class="choices" id="opts' + i + '">' +
+            p.options.map(function (o, j) {
+              return '<button class="opt" data-opt="' + i + '-' + j + '">' + o + '</button>';
+            }).join("") +
+          '</div>' +
+          '<div class="row">' +
+            '<button class="ghost" data-hint="' + i + '">Hint</button>' +
+            '<button class="ghost" data-sol="' + i + '">Show solution</button>' +
+          '</div>'
+        : '<div class="row">' +
+            '<input type="text" id="in' + i + '" placeholder="' +
+                   (p.placeholder || "x = ?  or  no solution") + '" ' +
+                   'autocomplete="off" spellcheck="false" aria-label="Answer to problem ' + (i+1) + '">' +
+            '<button data-check="' + i + '">Check</button>' +
+            '<button class="ghost" data-hint="' + i + '">Hint</button>' +
+            '<button class="ghost" data-sol="' + i + '">Show solution</button>' +
+          '</div>';
       el.innerHTML =
         '<div class="qhead">Problem ' + (i+1) + ' of ' + self.P.length + '</div>' +
         '<div class="prompt">' + p.prompt + '</div>' +
-        '<div class="row">' +
-          '<input type="text" id="in' + i + '" placeholder="x = ?  or  no solution" ' +
-                 'autocomplete="off" spellcheck="false" aria-label="Answer to problem ' + (i+1) + '">' +
-          '<button data-check="' + i + '">Check</button>' +
-          '<button class="ghost" data-hint="' + i + '">Hint</button>' +
-          '<button class="ghost" data-sol="' + i + '">Show solution</button>' +
-        '</div>' +
+        controls +
         '<div class="hint" id="hint' + i + '" style="display:none">' + p.hint + '</div>' +
         '<div class="fb" id="fb' + i + '"><div class="verdictline"></div><div class="detail"></div></div>' +
         '<div class="sol" id="sol' + i + '"><pre>' + esc(p.sol) + '</pre></div>';
@@ -159,12 +274,17 @@
 
     host.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b) return;
+      if (b.dataset.opt !== undefined) {
+        var parts = b.dataset.opt.split("-");
+        self.pick(+parts[0], +parts[1]);
+      }
       if (b.dataset.check !== undefined) self.check(+b.dataset.check);
       if (b.dataset.hint  !== undefined) self.showHint(+b.dataset.hint);
       if (b.dataset.sol   !== undefined) self.showSol(+b.dataset.sol);
     });
 
-    this.P.forEach(function (_, i) {
+    this.P.forEach(function (p, i) {
+      if (p.type === "choice") return;
       document.getElementById("in" + i).addEventListener("keydown", function (e) {
         if (e.key === "Enter") self.check(i);
       });
@@ -183,12 +303,48 @@
     if (!this.stats[i].solved) { this.stats[i].shownSol = true; this.save(); }
   };
 
+  Quiz.prototype.pick = function (i, j) {
+    var p = this.P[i], st = this.stats[i];
+    var card = document.getElementById("q" + i);
+    var fb = document.getElementById("fb" + i);
+    var line = fb.querySelector(".verdictline");
+    var det  = fb.querySelector(".detail");
+    fb.classList.add("show");
+    if (!st.solved) st.attempts++;
+
+    var chosen = p.options[j];
+    if (j === p.answer) {
+      if (!st.solved) { st.solved = true; st.firstTry = (st.attempts === 1 && !st.hint && !st.shownSol); }
+      card.classList.remove("wrong"); card.classList.add("right");
+      fb.classList.remove("no"); fb.classList.add("ok");
+      line.textContent = st.firstTry ? "Correct — first try." : "Correct.";
+      det.textContent = (p.optionFeedback && p.optionFeedback[j]) ||
+        "That's the right translation. Now solve it and check the answer makes sense.";
+      document.getElementById("sol" + i).classList.add("show");
+      var opts = document.getElementById("opts" + i);
+      if (opts) opts.querySelectorAll(".opt").forEach(function (b, k) {
+        b.classList.toggle("chosen", k === j);
+      });
+    } else {
+      if (!st.solved && st.wrong.indexOf(chosen) === -1) st.wrong.push(chosen);
+      card.classList.remove("right"); card.classList.add("wrong");
+      fb.classList.remove("ok"); fb.classList.add("no");
+      line.textContent = "Not quite — read it once more.";
+      det.textContent = (p.optionFeedback && p.optionFeedback[j]) || p.whenWrong ||
+        "Translate the sentence one phrase at a time, left to right.";
+      document.getElementById("hint" + i).style.display = "block";
+    }
+    this.save();
+    this.repaint();
+  };
+
   Quiz.prototype.check = function (i) {
     var p = this.P[i], st = this.stats[i];
     var raw = document.getElementById("in" + i).value;
     if (!raw.trim()) return;
 
     var got = normalize(raw), want = normalize(p.answer);
+    var correct = p.vars ? equivalent(raw, p.answer, p.vars) : (got === want);
     var card = document.getElementById("q" + i);
     var fb = document.getElementById("fb" + i);
     var line = fb.querySelector(".verdictline");
@@ -197,7 +353,7 @@
 
     if (!st.solved) st.attempts++;
 
-    if (got === want) {
+    if (correct) {
       if (!st.solved) {
         st.solved = true;
         st.firstTry = (st.attempts === 1 && !st.hint && !st.shownSol);
@@ -254,6 +410,12 @@
       }
       if (st.firstTry) first++;
       if (st.attempts > 0) attempted++;
+      if (st.solved && self.P[i].type === "choice") {
+        var o = document.getElementById("opts" + i);
+        if (o) o.querySelectorAll(".opt").forEach(function (b, k) {
+          b.classList.toggle("chosen", k === self.P[i].answer);
+        });
+      }
       if (st.hint) document.getElementById("hint" + i).style.display = "block";
       if (st.shownSol) document.getElementById("sol" + i).classList.add("show");
     });
