@@ -12,7 +12,10 @@
 !assets/
 !assets/*.js
 !assets/*.css
-!publish.sh
+
+#   publish.sh          — contains the leak-pattern reference; a published guard
+#                         would leak the very strings it guards (this happened once)
+#   .leakpatterns       — the strings themselves
 
 # Deliberately NOT published (personal / identifying):
 #   MISSION.md          — names the school, the class, the student
