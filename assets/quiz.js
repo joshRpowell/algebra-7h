@@ -54,14 +54,43 @@
   var ALL  = ["all","allreals","allrealnumbers","infinite","infinitelymany",
               "infinitelymanysolutions","infinitesolutions","infinity","everynumber","alln"];
 
+  /* Parse a linear expression in x ("-2x + 10", "10-2x", "-x", "3x-2x+4")
+   * into {a, b} for ax + b. Returns null if it is not a plain linear expression,
+   * so anything unusual falls through to a literal string comparison. */
+  function parseLinear(s) {
+    if (!/x/.test(s)) return null;
+    if (!/^[-+0-9x.]*$/.test(s)) return null;          // no parens, no other letters
+    var terms = s.replace(/-/g, "+-").split("+").filter(function (t) { return t !== ""; });
+    var a = 0, b = 0;
+    for (var i = 0; i < terms.length; i++) {
+      var t = terms[i];
+      if (t.indexOf("x") > -1) {
+        var c = t.replace("x", "");
+        if (c === "" || c === "+") c = "1";
+        if (c === "-") c = "-1";
+        var av = parseFloat(c);
+        if (isNaN(av)) return null;
+        a += av;
+      } else {
+        var bv = parseFloat(t);
+        if (isNaN(bv)) return null;
+        b += bv;
+      }
+    }
+    return { a: a, b: b };
+  }
+
   function normalize(raw) {
     var s = String(raw).toLowerCase().trim()
       .replace(/[−–—]/g, "-")      // unicode minus / dashes -> hyphen
+      .replace(/\u00b7|\*/g, "")   // stray multiplication marks
       .replace(/[\s,]/g, "");
     if (NONE.indexOf(s) > -1) return "none";
     if (ALL.indexOf(s)  > -1) return "all";
     s = s.replace(/^x=/, "");
     if (/^[+-]?\d+(\.\d+)?$/.test(s)) return String(parseFloat(s));
+    var lin = parseLinear(s);
+    if (lin) return lin.a + "x" + (lin.b >= 0 ? "+" : "") + lin.b;   // canonical ax+b
     return s;
   }
 
@@ -187,7 +216,18 @@
       card.classList.remove("right"); card.classList.add("wrong");
       fb.classList.remove("ok"); fb.classList.add("no");
       line.textContent = "Not quite — try once more.";
-      if (got === "0" && (want === "none" || want === "all")) {
+      // A predicted wrong answer gets a diagnosis of that specific mistake.
+      var hit = null;
+      if (p.commonErrors) {
+        for (var k = 0; k < p.commonErrors.length; k++) {
+          if (normalize(p.commonErrors[k].ans) === got) { hit = p.commonErrors[k]; break; }
+        }
+      }
+      if (hit) {
+        det.textContent = hit.say;
+      } else if (p.whenWrong) {
+        det.textContent = p.whenWrong;
+      } else if (got === "0" && (want === "none" || want === "all")) {
         det.textContent = "This is the trap. The variable disappearing does NOT mean x = 0 — it tells you about the NUMBER of solutions. Look at the statement left over and ask whether it's true or false.";
       } else if ((got === "none" || got === "all") && want !== "none" && want !== "all") {
         det.textContent = "The variable doesn't actually cancel here — the coefficients on the two sides are different. Redo the step where you moved the variable term.";

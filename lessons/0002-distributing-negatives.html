@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lesson 0002 — Distributing a Negative</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#5c5c5c; --rule:#dcd8d0; --bg:#fdfcfa; --card:#ffffff;
+    --accent:#8a3324; --accent-soft:#f6efe9;
+    --good:#2f6b3f; --good-soft:#eaf3ec; --bad:#a33; --bad-soft:#fbeeee;
+    --warn:#8a6a10; --warn-soft:#faf4e3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+  .page{max-width:50rem;margin:0 auto;padding:3.5rem 1.5rem 6rem}
+  header{border-bottom:3px double var(--rule);padding-bottom:1.4rem;margin-bottom:2rem}
+  .eyebrow{font:600 .72rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent)}
+  h1{font-size:2.3rem;line-height:1.12;margin:.55rem 0 .5rem;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:0;font-size:1.03rem}
+  h2{font-size:1.35rem;margin:2.75rem 0 .6rem;letter-spacing:-.01em}
+  h3{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.95rem;
+    margin:1.4rem 0 .4rem}
+  p{margin:.7rem 0}
+  a{color:var(--accent)}
+  .m{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.95em;
+    background:var(--accent-soft);padding:.08em .35em;border-radius:.2em;
+    white-space:nowrap}
+  /* ---- worked example ---- */
+  .work{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:1.1rem 1.25rem;margin:1.25rem 0}
+  .work .title{font:700 .72rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:.85rem}
+  table.steps{width:100%;border-collapse:collapse}
+  table.steps td{padding:.42rem .5rem;vertical-align:baseline;
+    border-bottom:1px solid #f0ece6}
+  table.steps tr:last-child td{border-bottom:none}
+  table.steps td.eq{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1rem;
+    white-space:nowrap;width:1%}
+  table.steps td.why{color:var(--muted);font-size:.88rem;
+    font-family:ui-sans-serif,system-ui,sans-serif;padding-left:1.5rem}
+  .final{background:var(--good-soft);border-radius:.3rem}
+  .final td.eq{font-weight:700;color:var(--good)}
+  /* ---- callouts ---- */
+  .callout{border-left:4px solid var(--accent);background:var(--accent-soft);
+    padding:.9rem 1.15rem;border-radius:0 .35rem .35rem 0;margin:1.4rem 0}
+  .callout.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .callout.good{border-left-color:var(--good);background:var(--good-soft)}
+  .callout h3{margin-top:0}
+  .callout p:last-child{margin-bottom:0}
+  /* ---- two special cases ---- */
+  .cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;
+    margin:1.25rem 0}
+  .case{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:1rem 1.1rem}
+  .case .tag{font:700 .7rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;display:inline-block;padding:.3rem .5rem;border-radius:.25rem;
+    margin-bottom:.6rem}
+  .case.no .tag{background:var(--bad-soft);color:var(--bad)}
+  .case.inf .tag{background:var(--good-soft);color:var(--good)}
+  .case pre{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.9rem;margin:.4rem 0;
+    line-height:1.7;white-space:pre-wrap}
+  .case .verdict{font-weight:700;margin-top:.5rem}
+  /* ---- practice ---- */
+  .scorebar{position:sticky;top:0;z-index:5;background:var(--bg);
+    border-bottom:1px solid var(--rule);padding:.7rem 0;margin:1.5rem 0 .5rem;
+    font:600 .85rem/1 ui-sans-serif,system-ui,sans-serif;color:var(--muted);
+    display:flex;align-items:center;gap:.75rem}
+  .track{flex:1;height:.4rem;background:#eae5dd;border-radius:.2rem;overflow:hidden}
+  .track span{display:block;height:100%;width:0;background:var(--good);
+    transition:width .35s ease}
+  .q{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:1.1rem 1.25rem;margin:1rem 0;transition:border-color .2s}
+  .q.right{border-color:var(--good);background:var(--good-soft)}
+  .q.wrong{border-color:var(--bad)}
+  .qhead{font:700 .7rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+  .prompt{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1.15rem;
+    margin:.2rem 0 .9rem}
+  .row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+  input[type=text]{font:1rem/1.4 "SF Mono",Menlo,Consolas,monospace;padding:.5rem .65rem;
+    border:1px solid #c9c2b8;border-radius:.35rem;width:13rem;background:#fff;color:var(--ink)}
+  input[type=text]:focus{outline:2px solid var(--accent);outline-offset:1px}
+  button{font:600 .85rem/1 ui-sans-serif,system-ui,sans-serif;padding:.6rem .95rem;
+    border-radius:.35rem;border:1px solid var(--accent);background:var(--accent);
+    color:#fff;cursor:pointer}
+  button.ghost{background:transparent;color:var(--accent)}
+  button:hover{filter:brightness(1.08)}
+  .fb{margin-top:.75rem;font-size:.93rem;display:none}
+  .fb.show{display:block}
+  .fb .verdictline{font-weight:700;margin-bottom:.3rem}
+  .fb.ok .verdictline{color:var(--good)}
+  .fb.no .verdictline{color:var(--bad)}
+  .sol{margin-top:.6rem;padding-top:.6rem;border-top:1px dashed var(--rule);
+    display:none}
+  .sol.show{display:block}
+  .sol pre{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.88rem;
+    line-height:1.75;margin:.3rem 0;white-space:pre-wrap}
+  .hint{color:var(--muted);font-size:.86rem;
+    font-family:ui-sans-serif,system-ui,sans-serif;margin-top:.5rem}
+  .studentbar{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;
+    background:var(--accent-soft);border:1px solid #e6d9d1;border-radius:.45rem;
+    padding:.6rem .9rem;margin:1.25rem 0;
+    font:.9rem/1.4 ui-sans-serif,system-ui,sans-serif}
+  .studentbar .who{color:#6b4a40}
+  .studentbar .who strong{color:var(--accent);font-size:1rem}
+  .studentbar.picking{display:block;background:var(--card);border-color:var(--rule);
+    padding:1.1rem 1.25rem}
+  .studentbar .pickwrap h3{margin:0 0 .3rem;font-size:1.05rem;
+    font-family:inherit;font-weight:700}
+  .studentbar .pickwrap p{margin:.3rem 0 .8rem;color:var(--muted);font-size:.9rem}
+  .studentbar .pickwrap p.or{margin:.85rem 0 .5rem;font-size:.85rem}
+  .studentbar .roster button{background:var(--card);color:var(--accent);
+    border:1px solid var(--accent);font-size:.95rem;padding:.55rem 1.1rem}
+  .studentbar .roster button:hover{background:var(--accent);color:#fff}
+  .studentbar input[type=text]{width:11rem;font-family:inherit}
+  #nameErr{color:var(--bad)}
+  .savepanel{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+    padding:1.15rem 1.25rem;margin:1.5rem 0}
+  .savepanel h3{margin-top:0}
+  .savepanel p{font-size:.93rem;color:#444}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  #saveMsg{color:var(--good);font-size:.88rem}
+  #done{display:none;margin:2rem 0;padding:1.25rem;border-radius:.5rem;
+    background:var(--good-soft);border:1px solid var(--good)}
+  #done.show{display:block}
+  footer{margin-top:3.5rem;padding-top:1.25rem;border-top:1px solid var(--rule);
+    color:var(--muted);font-size:.88rem}
+  ul.tight li{margin:.4rem 0}
+  @media print{
+    body{background:#fff}.page{padding:0;max-width:none}
+    .scorebar,button{display:none}.sol,.fb{display:block !important}
+    h2{break-after:avoid}.q,.work,.callout,.case{break-inside:avoid}
+    a{color:var(--ink);text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <span class="eyebrow">Lesson 0002 · Unit 1 — Expressions and Equations</span>
+  <h1>Distributing a Negative</h1>
+  <p class="sub">One sign, and every term inside the parentheses changes. This is where
+  most of the lost points in Unit 1 actually come from.</p>
+</header>
+
+<p>In <a href="./0001-variables-both-sides.html">Lesson 0001</a> you learned to move
+variable terms across the equals sign. Now the parentheses show up — and with them, the
+single most common way to lose points in this entire unit.</p>
+
+<p>Here's the thing: nobody gets these wrong because the idea is hard. They get them wrong
+because they go fast, and a minus sign is small. Your teacher has seen this mistake a
+thousand times. Getting immune to it is one of the cheapest ways to pull ahead of the
+class.</p>
+
+<h2>The invisible &minus;1</h2>
+
+<div class="callout">
+  <p>When you see a minus sign sitting in front of parentheses with nothing else between
+  them, there is a <strong>&minus;1</strong> hiding there:</p>
+  <p style="text-align:center;font-size:1.15rem;margin:.9rem 0">
+    <span class="m">&minus;(x + 3)</span> &nbsp;really means&nbsp;
+    <span class="m">&minus;1(x + 3)</span></p>
+  <p>Once you write that <span class="m">&minus;1</span> in, this stops being a special
+  case. It's just the distributive property you already know — multiply the outside by
+  <strong>every</strong> term inside.</p>
+  <p>And because multiplying by &minus;1 flips a sign, the result is:
+  <strong>every term inside changes sign.</strong> Not just the first one. Every one.</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 1 — the bare minus sign</div>
+  <table class="steps">
+    <tr><td class="eq">&minus;(x + 3)</td><td class="why">Start. There's a hidden &minus;1 out front.</td></tr>
+    <tr><td class="eq">&minus;1(x + 3)</td><td class="why">Write it in. Now it's ordinary distribution.</td></tr>
+    <tr><td class="eq">(&minus;1)(x) + (&minus;1)(3)</td><td class="why">Multiply the outside by each term inside.</td></tr>
+    <tr class="final"><td class="eq">&minus;x &minus; 3</td><td class="why">Both signs flipped. The <span class="m">+3</span> became <span class="m">&minus;3</span>.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Check it:</strong> pick <span class="m">x = 2</span>.
+  Original: <span class="m">&minus;(2 + 3) = &minus;5</span>.
+  Answer: <span class="m">&minus;2 &minus; 3 = &minus;5</span>. Same. &#10003;</p>
+</div>
+
+<div class="callout good">
+  <h3>The substitution trick — check any distribution in 10 seconds</h3>
+  <p>Not sure you distributed right? <strong>Pick a number for x and try both versions.</strong>
+  If the original and your answer give the same result, you almost certainly did it right.
+  Use <span class="m">x = 2</span> — never use <span class="m">x = 0</span> or
+  <span class="m">x = 1</span>, because those hide sign errors.</p>
+  <p>This works on tests. It takes seconds and it catches exactly the mistake this lesson
+  is about.</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 2 — a negative times a negative</div>
+  <table class="steps">
+    <tr><td class="eq">&minus;4(2x &minus; 3)</td><td class="why">Start.</td></tr>
+    <tr><td class="eq">(&minus;4)(2x) + (&minus;4)(&minus;3)</td><td class="why">The term inside is <span class="m">&minus;3</span> — carry its sign along.</td></tr>
+    <tr class="final"><td class="eq">&minus;8x + 12</td><td class="why">Negative times negative is <strong>positive</strong>. That <span class="m">+12</span> is the whole point.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Check:</strong> at <span class="m">x = 2</span>,
+  original is <span class="m">&minus;4(4 &minus; 3) = &minus;4</span>;
+  answer is <span class="m">&minus;16 + 12 = &minus;4</span>. &#10003;</p>
+</div>
+
+<div class="work">
+  <div class="title">Worked example 3 — subtracting a whole parenthesis in an equation</div>
+  <table class="steps">
+    <tr><td class="eq">10 &minus; (3x &minus; 4) = 20</td><td class="why">That minus applies to the <em>entire</em> parenthesis.</td></tr>
+    <tr><td class="eq">10 &minus; 3x + 4 = 20</td><td class="why">Distribute the &minus;1: <span class="m">&minus;4</span> becomes <span class="m">+4</span>.</td></tr>
+    <tr><td class="eq">14 &minus; 3x = 20</td><td class="why">Combine the constants.</td></tr>
+    <tr><td class="eq">&minus;3x = 6</td><td class="why">Subtract 14 from both sides.</td></tr>
+    <tr class="final"><td class="eq">x = &minus;2</td><td class="why">Divide by &minus;3.</td></tr>
+  </table>
+  <p style="margin:.9rem 0 0;font-size:.9rem;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif">
+  <strong style="color:var(--ink)">Check:</strong>
+  <span class="m">10 &minus; (3(&minus;2) &minus; 4) = 10 &minus; (&minus;10) = 20</span>. &#10003;</p>
+</div>
+
+<h2>The three ways this goes wrong</h2>
+<p>Every mistake on this topic is one of these three. Learn to recognize them and you can
+catch your own errors before you hand the paper in.</p>
+
+<div class="cases">
+  <div class="case no">
+    <span class="tag">Error 1 — stopped early</span>
+    <pre>&minus;3(x + 5)
+= &minus;3x + 5   &#10007;</pre>
+    <p style="font-size:.9rem;margin:.5rem 0 0">The &minus;3 only reached the
+    <span class="m">x</span>. It has to hit <em>both</em> terms.</p>
+    <p class="verdict" style="color:var(--good)">Correct: &minus;3x &minus; 15</p>
+  </div>
+  <div class="case no">
+    <span class="tag">Error 2 — lost the flip</span>
+    <pre>&minus;2(4x &minus; 3)
+= &minus;8x &minus; 6   &#10007;</pre>
+    <p style="font-size:.9rem;margin:.5rem 0 0">Negative times negative is positive.
+    <span class="m">(&minus;2)(&minus;3) = +6</span>.</p>
+    <p class="verdict" style="color:var(--good)">Correct: &minus;8x + 6</p>
+  </div>
+  <div class="case no">
+    <span class="tag">Error 3 — missed the hidden &minus;1</span>
+    <pre>5 &minus; (2x &minus; 3)
+= 5 &minus; 2x &minus; 3   &#10007;</pre>
+    <p style="font-size:.9rem;margin:.5rem 0 0">The minus belongs to the whole
+    parenthesis, so the <span class="m">&minus;3</span> flips to <span class="m">+3</span>.</p>
+    <p class="verdict" style="color:var(--good)">Correct: &minus;2x + 8</p>
+  </div>
+</div>
+
+<h2>Your turn</h2>
+<p>Eight problems. The first six ask you to <strong>simplify</strong> — type the expression,
+like <span class="m">-2x + 6</span> (order doesn't matter, <span class="m">6 - 2x</span>
+works too). The last two are <strong>equations</strong> — type the value of <em>x</em>.
+Press Enter to check.</p>
+
+<div class="studentbar" id="studentbar"></div>
+
+<div class="scorebar">
+  <span id="scoretext">0 of 8</span>
+  <span class="track"><span id="bar"></span></span>
+</div>
+
+<div id="quiz"></div>
+
+<div id="done">
+  <h3 style="margin-top:0">That's the lesson.</h3>
+  <p>You can now distribute a negative without losing a sign, and — just as important —
+  you have a 10-second check that catches the mistake when you do slip.</p>
+  <p><strong>Next:</strong></p>
+  <ul class="tight">
+    <li>More reps with instant feedback:
+      <a href="https://www.khanacademy.org/math/algebra-basics/alg-basics-algebraic-expressions/alg-basics-distributive-property/e/distributive-property-with-variables">Khan
+      Academy — distributive property with variables</a> and
+      <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:foundation-algebra/x2f8bb11595b61c86:combine-like-terms/e/combining_like_terms_2">combining
+      like terms with negatives</a>.</li>
+    <li>Save your results below, then ask your tutor for Lesson 0003 — multi-step equations
+      with fractions.</li>
+  </ul>
+</div>
+
+<div class="savepanel" id="savepanel"></div>
+
+<div class="callout">
+  <h3>Write it like the rubric is watching</h3>
+  <ul class="tight">
+    <li><strong>Write the distribution step on its own line.</strong> Don't do it in your
+      head. <span class="m">&minus;3(x + 5)</span> &rarr; <span class="m">&minus;3x &minus; 15</span>
+      &rarr; then keep going. If you skip the line and get it wrong, you lose the whole
+      problem instead of one step.</li>
+    <li>When a bare minus sits in front of parentheses, <strong>write the &minus;1 in</strong>.
+      It looks like extra work. It's the cheapest insurance in this unit.</li>
+    <li>Your syllabus grades justification — naming the <em>distributive property</em> when
+      you use it is exactly the kind of precision that earns full credit.</li>
+  </ul>
+</div>
+
+<footer>
+  <p><strong>Ask your tutor.</strong> If any problem below still doesn't make sense after
+  you read the solution, say so — you'll get it explained a different way. Stuck on an
+  <em>assigned</em> problem? Don't paste it in; ask for a similar one with different
+  numbers instead.</p>
+  <p><strong>Sources:</strong>
+  <a href="https://www.khanacademy.org/math/algebra-basics/alg-basics-algebraic-expressions/alg-basics-distributive-property/e/distributive-property-with-variables">Khan
+  Academy — Distributive property with variables</a> ·
+  <a href="https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-variables-expressions/cc-7th-factoring/e/factoring_linear_binomials">Distributive
+  property with negative numbers</a> ·
+  <a href="https://openstax.org/details/books/elementary-algebra-2e">OpenStax,
+  <em>Elementary Algebra 2e</em></a></p>
+  <p>See also: <a href="./0001-variables-both-sides.html">Lesson 0001</a> ·
+  <a href="../reference/COURSE-MAP.html">Course Map</a> ·
+  <a href="../reference/GLOSSARY.html">Glossary</a></p>
+</footer>
+
+</div>
+
+<script src="../assets/quiz.js"></script>
+<script>
+Quiz.mount({
+  lesson: "0002",
+  title:  "Distributing a Negative",
+  unit:   "Unit 1 — Expressions and Equations",
+  mount:  "#quiz",
+  problems: [
+  { prompt: "\u2212(x + 7)", answer: "-x-7",
+    hint: "Write the hidden \u22121 in front, then multiply it by each term inside.",
+    commonErrors: [{ ans: "-x+7", say: "You flipped the x but left the 7 alone. The \u22121 multiplies EVERY term inside \u2014 the +7 has to become \u22127." }],
+    sol: "\u2212(x + 7)\n= \u22121(x + 7)          (the hidden \u22121)\n= (\u22121)(x) + (\u22121)(7)\n= \u2212x \u2212 7\n\nCheck at x = 2: \u2212(2+7) = \u22129, and \u22122 \u2212 7 = \u22129. \u2713" },
+
+  { prompt: "\u2212(x \u2212 4)", answer: "-x+4",
+    hint: "The term inside is \u22124. What is (\u22121) \u00d7 (\u22124)?",
+    commonErrors: [{ ans: "-x-4", say: "Careful: (\u22121)(\u22124) = +4, not \u22124. A negative times a negative is positive." }],
+    sol: "\u2212(x \u2212 4)\n= \u22121(x \u2212 4)\n= (\u22121)(x) + (\u22121)(\u22124)\n= \u2212x + 4\n\nCheck at x = 2: \u2212(2\u22124) = \u2212(\u22122) = 2, and \u22122 + 4 = 2. \u2713" },
+
+  { prompt: "\u22125(x + 2)", answer: "-5x-10",
+    hint: "Multiply \u22125 by x, then \u22125 by +2.",
+    commonErrors: [
+      { ans: "-5x+2",  say: "The \u22125 only reached the x. It has to multiply the +2 as well." },
+      { ans: "-5x+10", say: "(\u22125)(+2) = \u221210, not +10. Both numbers here are being multiplied, and only one of them is negative." }],
+    sol: "\u22125(x + 2)\n= (\u22125)(x) + (\u22125)(2)\n= \u22125x \u2212 10\n\nCheck at x = 2: \u22125(4) = \u221220, and \u221210 \u2212 10 = \u221220. \u2713" },
+
+  { prompt: "\u22122(4x \u2212 3)", answer: "-8x+6",
+    hint: "Two multiplications: (\u22122)(4x) and (\u22122)(\u22123).",
+    commonErrors: [{ ans: "-8x-6", say: "This is the classic one. (\u22122)(\u22123) = +6 \u2014 negative times negative is positive." }],
+    sol: "\u22122(4x \u2212 3)\n= (\u22122)(4x) + (\u22122)(\u22123)\n= \u22128x + 6\n\nCheck at x = 2: \u22122(8\u22123) = \u221210, and \u221216 + 6 = \u221210. \u2713" },
+
+  { prompt: "5 \u2212 (2x \u2212 3)", answer: "-2x+8",
+    hint: "The minus in front of the parenthesis is a hidden \u22121. Distribute it, THEN combine the constants.",
+    commonErrors: [{ ans: "-2x+2", say: "You distributed the minus to the 2x but not to the \u22123. It should become +3, giving 5 + 3 = 8." }],
+    sol: "5 \u2212 (2x \u2212 3)\n= 5 \u2212 1(2x \u2212 3)\n= 5 \u2212 2x + 3      (both inside terms flip)\n= \u22122x + 8         (combine 5 + 3)\n\nCheck at x = 2: 5 \u2212 (4\u22123) = 4, and \u22124 + 8 = 4. \u2713" },
+
+  { prompt: "\u2212(3x \u2212 1) + 2x", answer: "-x+1",
+    hint: "Distribute first, then combine the two x terms.",
+    commonErrors: [
+      { ans: "-x-1", say: "The distribution is right on the x terms, but (\u22121)(\u22121) = +1, so the constant is +1." },
+      { ans: "-5x+1", say: "Watch the signs when combining: \u22123x + 2x = \u2212x, not \u22125x." }],
+    sol: "\u2212(3x \u2212 1) + 2x\n= \u22123x + 1 + 2x     (distribute the \u22121)\n= (\u22123x + 2x) + 1\n= \u2212x + 1\n\nCheck at x = 2: \u2212(6\u22121) + 4 = \u22125 + 4 = \u22121, and \u22122 + 1 = \u22121. \u2713" },
+
+  { prompt: "Solve:  12 \u2212 (2x \u2212 5) = 3", answer: "7",
+    hint: "Distribute the minus across BOTH terms first. The \u22125 becomes +5.",
+    commonErrors: [{ ans: "2", say: "You got 12 \u2212 2x \u2212 5 instead of 12 \u2212 2x + 5. The \u22125 inside flips to +5 when the minus distributes." }],
+    sol: "12 \u2212 (2x \u2212 5) = 3\n12 \u2212 2x + 5 = 3        (distribute \u2014 \u22125 becomes +5)\n17 \u2212 2x = 3             (combine constants)\n\u22122x = \u221214              (subtract 17)\nx = 7                     (divide by \u22122)\n\nCheck: 12 \u2212 (14 \u2212 5) = 12 \u2212 9 = 3. \u2713" },
+
+  { prompt: "Solve:  4 \u2212 3(x \u2212 2) = 16", answer: "-2",
+    hint: "Distribute the \u22123 across both terms before you combine anything.",
+    commonErrors: [{ ans: "-6", say: "You used 4 \u2212 3x \u2212 6. But (\u22123)(\u22122) = +6, so it is 4 \u2212 3x + 6 = 10 \u2212 3x." }],
+    sol: "4 \u2212 3(x \u2212 2) = 16\n4 \u2212 3x + 6 = 16        (distribute \u22123; (\u22123)(\u22122) = +6)\n10 \u2212 3x = 16            (combine constants)\n\u22123x = 6                  (subtract 10)\nx = \u22122                    (divide by \u22123)\n\nCheck: 4 \u2212 3(\u22122 \u2212 2) = 4 \u2212 3(\u22124) = 4 + 12 = 16. \u2713" }
+  ]
+});
+</script>
+</body>
+</html>
