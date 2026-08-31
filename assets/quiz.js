@@ -11,6 +11,45 @@
 
   var PROGRESS_REPO = "joshRpowell/algebra-7h-progress";
 
+  /* ---------------- student identity ----------------
+   * Several kids share this site, so every run has to say who did it, and each
+   * kid's saved progress has to live under its own key or they clobber each
+   * other on a shared browser. First names only — enough to tell runs apart.
+   */
+  var ROSTER_KEY = "alg7h:roster", CURRENT_KEY = "alg7h:current";
+
+  function lsGet(k, dflt) {
+    try { var v = localStorage.getItem(k); return v === null ? dflt : JSON.parse(v); }
+    catch (e) { return dflt; }
+  }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+
+  function cleanName(raw) {
+    var s = String(raw || "")
+      .replace(/[^A-Za-z0-9\u00C0-\u024F '\-]/g, "")  // letters (incl. accents), digits, space, apostrophe, hyphen
+      .replace(/\s+/g, " ").trim().slice(0, 24);
+    if (!s) return "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+  function slugify(n) {
+    return String(n).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+
+  var Student = {
+    roster:  function () { var r = lsGet(ROSTER_KEY, []); return Array.isArray(r) ? r : []; },
+    current: function () { var c = lsGet(CURRENT_KEY, null); return typeof c === "string" && c ? c : null; },
+    set: function (name) {
+      var n = cleanName(name);
+      if (!n) return null;
+      var r = this.roster();
+      if (r.indexOf(n) === -1) { r.push(n); r.sort(); lsSet(ROSTER_KEY, r); }
+      lsSet(CURRENT_KEY, n);
+      return n;
+    },
+    clear: function () { try { localStorage.removeItem(CURRENT_KEY); } catch (e) {} }
+  };
+
+
   var NONE = ["nosolution","none","no","nosolutions","emptyset","empty","∅","{}","nosol"];
   var ALL  = ["all","allreals","allrealnumbers","infinite","infinitelymany",
               "infinitelymanysolutions","infinitesolutions","infinity","everynumber","alln"];
@@ -30,10 +69,11 @@
     return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   }
 
-  function Quiz(cfg) {
+  function Quiz(cfg, student) {
     this.cfg = cfg;
     this.P = cfg.problems;
-    this.key = "alg7h:" + cfg.lesson;
+    this.student = student;
+    this.key = "alg7h:" + slugify(student) + ":" + cfg.lesson;
     this.started = Date.now();
     this.stats = this.P.map(function () {
       return { attempts:0, solved:false, firstTry:false, hint:false, shownSol:false, wrong:[] };
@@ -215,10 +255,11 @@
       .map(function (st, i) { return (!st.solved || st.attempts > 2 || st.shownSol) ? (i+1) : null; })
       .filter(function (x) { return x; });
 
-    var title = "Lesson " + cfg.lesson + " — " + cfg.title + " — " +
+    var title = this.student + " · Lesson " + cfg.lesson + " — " + cfg.title + " — " +
                 c.solved + "/" + c.total + " (" + c.first + " first try)";
 
     var body =
+      "**Student:** " + this.student + "  \n" +
       "**Lesson:** " + cfg.lesson + " — " + cfg.title + "  \n" +
       "**Unit:** " + cfg.unit + "  \n" +
       "**Finished:** " + new Date().toLocaleString() + "  \n" +
@@ -238,7 +279,7 @@
       "<!-- machine-readable; do not edit below -->\n" +
       "```json\n" +
       JSON.stringify({
-        lesson: cfg.lesson, solved: c.solved, total: c.total,
+        student: this.student, lesson: cfg.lesson, solved: c.solved, total: c.total,
         firstTry: c.first, minutes: mins,
         problems: this.stats.map(function (st, i) {
           return { n:i+1, solved:st.solved, firstTry:st.firstTry,
@@ -247,6 +288,8 @@
         })
       }, null, 1) + "\n```\n";
 
+    // Only labels that already exist in the repo — GitHub's prefill URL drops
+    // unknown ones, so the student name lives in the title/body/JSON instead.
     var labels = "results,lesson:" + cfg.lesson + (struggled.length ? ",needs-review" : "");
     return {
       title: title, body: body,
@@ -263,7 +306,8 @@
     if (!host) return;
     host.innerHTML =
       '<h3>Save your results</h3>' +
-      '<p>Sends this run to your <strong>private</strong> progress repo as a GitHub issue, ' +
+      '<p>Saving as <strong>' + esc(this.student) + '</strong>. ' +
+      'Sends this run to the <strong>private</strong> progress repo as a GitHub issue, ' +
       'so it follows you between computers and your tutor can see how it actually went. ' +
       'GitHub opens with everything filled in — add a note if you want, then hit ' +
       '<em>Create</em>.</p>' +
@@ -306,8 +350,85 @@
     }
   };
 
+  /* ---------------- student bar / picker ---------------- */
+  function renderIdentity(cfg, onReady) {
+    var bar = document.getElementById("studentbar");
+    if (!bar) { onReady(Student.current() || "Unknown"); return; }
+
+    function showCurrent(name) {
+      bar.className = "studentbar";
+      bar.innerHTML =
+        '<span class="who">Working as <strong>' + esc(name) + '</strong></span>' +
+        '<button class="ghost" id="switchBtn">Not you? Switch</button>';
+      document.getElementById("switchBtn").addEventListener("click", function () {
+        Student.clear();
+        showPicker(true);
+      });
+    }
+
+    function showPicker(isSwitch) {
+      var r = Student.roster();
+      bar.className = "studentbar picking";
+      bar.innerHTML =
+        '<div class="pickwrap">' +
+          '<h3>Who\'s working on this lesson?</h3>' +
+          '<p>Your answers and progress are saved separately for each person, so you ' +
+          'won\'t overwrite anyone else\'s work.</p>' +
+          (r.length
+            ? '<div class="row roster">' + r.map(function (n) {
+                return '<button data-pick="' + esc(n) + '">' + esc(n) + '</button>';
+              }).join("") + '</div>' +
+              '<p class="or">or add someone new:</p>'
+            : "") +
+          '<div class="row">' +
+            '<input type="text" id="newName" placeholder="First name" maxlength="24" ' +
+                   'autocomplete="off" aria-label="Your first name">' +
+            '<button id="startBtn">Start</button>' +
+          '</div>' +
+          '<div class="hint" id="nameErr" style="display:none"></div>' +
+        '</div>';
+
+      bar.querySelectorAll("[data-pick]").forEach(function (b) {
+        b.addEventListener("click", function () { choose(b.dataset.pick, isSwitch); });
+      });
+      var input = document.getElementById("newName");
+      document.getElementById("startBtn").addEventListener("click", function () {
+        choose(input.value, isSwitch);
+      });
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") choose(input.value, isSwitch);
+      });
+      if (!isSwitch) setTimeout(function () { try { input.focus(); } catch (e) {} }, 60);
+    }
+
+    function choose(raw, isSwitch) {
+      var name = Student.set(raw);
+      if (!name) {
+        var err = document.getElementById("nameErr");
+        if (err) { err.textContent = "Type a first name to get started."; err.style.display = "block"; }
+        return;
+      }
+      if (isSwitch) { location.reload(); return; }   // reload so the right saved progress loads
+      showCurrent(name);
+      onReady(name);
+    }
+
+    var cur = Student.current();
+    if (cur) { showCurrent(cur); onReady(cur); }
+    else { showPicker(false); }
+  }
+
   global.Quiz = {
-    mount: function (cfg) { var q = new Quiz(cfg); q.mount(); global.__quiz = q; return q; },
-    normalize: normalize
+    mount: function (cfg) {
+      renderIdentity(cfg, function (student) {
+        var q = new Quiz(cfg, student);
+        q.mount();
+        global.__quiz = q;
+      });
+    },
+    normalize: normalize,
+    Student: Student,
+    _cleanName: cleanName,
+    _slugify: slugify
   };
 })(window);

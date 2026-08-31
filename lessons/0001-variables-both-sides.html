@@ -100,6 +100,23 @@
     line-height:1.75;margin:.3rem 0;white-space:pre-wrap}
   .hint{color:var(--muted);font-size:.86rem;
     font-family:ui-sans-serif,system-ui,sans-serif;margin-top:.5rem}
+  .studentbar{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;
+    background:var(--accent-soft);border:1px solid #e6d9d1;border-radius:.45rem;
+    padding:.6rem .9rem;margin:1.25rem 0;
+    font:.9rem/1.4 ui-sans-serif,system-ui,sans-serif}
+  .studentbar .who{color:#6b4a40}
+  .studentbar .who strong{color:var(--accent);font-size:1rem}
+  .studentbar.picking{display:block;background:var(--card);border-color:var(--rule);
+    padding:1.1rem 1.25rem}
+  .studentbar .pickwrap h3{margin:0 0 .3rem;font-size:1.05rem;
+    font-family:inherit;font-weight:700}
+  .studentbar .pickwrap p{margin:.3rem 0 .8rem;color:var(--muted);font-size:.9rem}
+  .studentbar .pickwrap p.or{margin:.85rem 0 .5rem;font-size:.85rem}
+  .studentbar .roster button{background:var(--card);color:var(--accent);
+    border:1px solid var(--accent);font-size:.95rem;padding:.55rem 1.1rem}
+  .studentbar .roster button:hover{background:var(--accent);color:#fff}
+  .studentbar input[type=text]{width:11rem;font-family:inherit}
+  #nameErr{color:var(--bad)}
   .savepanel{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
     padding:1.15rem 1.25rem;margin:1.5rem 0}
   .savepanel h3{margin-top:0}
@@ -240,6 +257,8 @@ usual. <strong>Read the statement that's left and ask: is it true or false?</str
 <strong>no solution</strong> or <strong>infinitely many</strong>. Press Enter to check.
 You get feedback instantly, and you can reveal the full worked solution for any problem
 after you've tried it.</p>
+
+<div class="studentbar" id="studentbar"></div>
 
 <div class="scorebar">
   <span id="scoretext">0 of 6</span>
