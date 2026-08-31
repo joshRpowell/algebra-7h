@@ -201,26 +201,32 @@ Quiz.mount({
   mount:  "#quiz",
   problems: [
   { prompt: "7x \u2212 4 = 4x + 11", answer: "5",
+    tag: "vars-both-sides",
     hint: "Subtract 4x from both sides first — it's the smaller variable term.",
     sol: "7x \u2212 4 = 4x + 11\n7x \u2212 4 \u2212 4x = 4x + 11 \u2212 4x   (subtract 4x)\n3x \u2212 4 = 11\n3x = 15                    (add 4)\nx = 5                      (divide by 3)\n\nCheck: 7(5) \u2212 4 = 31 and 4(5) + 11 = 31. \u2713" },
 
   { prompt: "9 \u2212 2x = 5x \u2212 12", answer: "3",
+    tag: "vars-both-sides",
     hint: "The variable terms are \u22122x and 5x. Adding 2x to both sides keeps things positive.",
     sol: "9 \u2212 2x = 5x \u2212 12\n9 = 7x \u2212 12               (add 2x to both sides)\n21 = 7x                    (add 12)\nx = 3                      (divide by 7)\n\nCheck: 9 \u2212 2(3) = 3 and 5(3) \u2212 12 = 3. \u2713" },
 
   { prompt: "3(x + 4) = 2x + 18", answer: "6",
+    tag: "distribute-then-solve",
     hint: "Distribute the 3 before you move anything.",
     sol: "3(x + 4) = 2x + 18\n3x + 12 = 2x + 18          (distribute)\nx + 12 = 18                (subtract 2x)\nx = 6                      (subtract 12)\n\nCheck: 3(6 + 4) = 30 and 2(6) + 18 = 30. \u2713" },
 
   { prompt: "5x \u2212 8 = 5x + 1", answer: "none",
+    tag: "no-solution",
     hint: "Try subtracting 5x from both sides and read what's left very carefully.",
     sol: "5x \u2212 8 = 5x + 1\n\u22128 = 1                     (subtract 5x \u2014 the variable is gone)\n\n\u22128 = 1 is false, and it doesn't depend on x at all.\nNo value of x can make this true.\n\nAnswer: no solution (a contradiction)" },
 
   { prompt: "4(2x \u2212 1) = 8x \u2212 4", answer: "all",
+    tag: "infinite-solutions",
     hint: "Distribute first, then compare the two sides. Do they look familiar?",
     sol: "4(2x \u2212 1) = 8x \u2212 4\n8x \u2212 4 = 8x \u2212 4            (distribute \u2014 the sides are identical)\n\u22124 = \u22124                    (subtract 8x)\n\n\u22124 = \u22124 is true no matter what x is.\nEvery real number is a solution.\n\nAnswer: infinitely many solutions (an identity)" },
 
   { prompt: "\u22122(x \u2212 5) = 4x + 22", answer: "-2",
+    tag: "distribute-negative",
     hint: "Careful distributing a negative: \u22122 times \u22125 is +10, not \u221210.",
     sol: "\u22122(x \u2212 5) = 4x + 22\n\u22122x + 10 = 4x + 22         (distribute \u2014 note \u22122 \u00d7 \u22125 = +10)\n10 = 6x + 22               (add 2x to both sides)\n\u221212 = 6x                   (subtract 22)\nx = \u22122                     (divide by 6)\n\nCheck: \u22122(\u22122 \u2212 5) = \u22122(\u22127) = 14 and 4(\u22122) + 22 = 14. \u2713" }
   ]

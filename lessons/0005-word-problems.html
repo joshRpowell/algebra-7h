@@ -187,6 +187,7 @@ Quiz.mount({
       "This is the classic trap. \"6 less than n\" starts from n and removes 6, so it is n − 6. Test it with numbers: 6 less than 20 is 14, and 20 − 6 = 14.",
       "That is six TIMES n. \"Less than\" is subtraction, not multiplication.",
       "\"Less than\" subtracts. This one adds."],
+    tag: "translate-less-than",
     hint: "Say it with a real number first: what is 6 less than 20?",
     sol: "Let n = the number.\n\"Six less than n\"  →  n − 6\n\"is 14\"           →  = 14\n\nEquation: n − 6 = 14   (so n = 20)\n\n\"Less than\" is one of the few phrases that reverses the order." },
 
@@ -199,6 +200,7 @@ Quiz.mount({
       "Right. The parentheses keep \"the sum\" together so that twice applies to the whole thing.",
       "This doubles the 5 instead of the sum.",
       "This treats 5 as another n. The 5 is just five."],
+    tag: "translate-grouping",
     hint: "What exactly is being doubled? Find that phrase and put parentheses around it.",
     sol: "Let n = the number.\n\"the sum of a number and 5\"  →  (n + 5)\n\"twice\" that                →  2(n + 5)\n\"is 26\"                     →  = 26\n\nEquation: 2(n + 5) = 26\n2n + 10 = 26  →  2n = 16  →  n = 8\n\nWhen a phrase names a whole quantity, parenthesise it before you do anything to it." },
 
@@ -211,29 +213,34 @@ Quiz.mount({
       "\"3 times the number\" is 3n, not n + 3.",
       "Right — and notice this one has the variable on both sides, which is Lesson 0001.",
       "The decrease applies to the number itself, not to 3 times it."],
+    tag: "translate-both-sides",
     hint: "Translate each side separately, then join them with the equals sign.",
     sol: "Let n = the number.\n\"A number decreased by 8\"  →  n − 8\n\"equals\"                   →  =\n\"3 times the number\"       →  3n\n\nEquation: n − 8 = 3n\n−8 = 2n  →  n = −4\n\nCheck: −4 − 8 = −12, and 3(−4) = −12. ✓" },
 
   { prompt: "&ldquo;Seven more than twice a number is 23. What is the number?&rdquo;",
     answer: "8", placeholder: "the number",
+    tag: "translate-and-solve",
     hint: "Let n be the number. \"Twice\" it, then seven more, equals 23.",
     commonErrors: [{ ans: "15", say: "Looks like you solved n + 7 = 23 — but it is TWICE the number plus seven: 2n + 7 = 23." }],
     sol: "Let n = the number.\n2n + 7 = 23\n2n = 16\nn = 8\n\nThe number is 8.  Check: 2(8) + 7 = 23. ✓" },
 
   { prompt: "&ldquo;Five less than three times a number is 16. What is the number?&rdquo;",
     answer: "7", placeholder: "the number",
+    tag: "translate-less-than",
     hint: "\"Three times a number\" is 3n. Then five LESS than that.",
     commonErrors: [{ ans: "-11/3", say: "You wrote 5 − 3n = 16. \"Five less than 3n\" starts from 3n and takes 5 away: 3n − 5 = 16." }],
     sol: "Let n = the number.\n3n − 5 = 16\n3n = 21\nn = 7\n\nThe number is 7.  Check: 3(7) − 5 = 16. ✓" },
 
   { prompt: "&ldquo;A gym charges a $30 joining fee plus $15 per month. After how many months will you have paid $150?&rdquo;",
     answer: "8", placeholder: "months",
+    tag: "model-fee-plus-rate",
     hint: "The $30 happens once. The $15 happens every month — attach it to the variable.",
     commonErrors: [{ ans: "10", say: "That is 150 ÷ 15, which forgets the one-time $30 fee. Subtract it first: 150 − 30 = 120, then divide by 15." }],
     sol: "Let m = number of months.\n30 + 15m = 150\n15m = 120\nm = 8\n\nAfter 8 months.  Check: 30 + 15(8) = 30 + 120 = 150. ✓" },
 
   { prompt: "&ldquo;A rectangle has perimeter 46 cm. Its length is 5 cm more than its width. Find the <strong>width</strong>.&rdquo;",
     answer: "9", placeholder: "width in cm",
+    tag: "answer-the-question",
     hint: "Let w = the width. Then the length is w + 5. Perimeter is 2(length) + 2(width).",
     commonErrors: [
       { ans: "14", say: "That is the LENGTH. The question asks for the width — w = 9, and the length is w + 5 = 14. Always re-read what was asked." },
@@ -242,6 +249,7 @@ Quiz.mount({
 
   { prompt: "&ldquo;Alex has twice as many stickers as Sam. Together they have 42. How many does <strong>Sam</strong> have?&rdquo;",
     answer: "14", placeholder: "Sam's stickers",
+    tag: "answer-the-question",
     hint: "Use ONE variable. Let s = Sam's stickers; then Alex has 2s. Together means add.",
     commonErrors: [
       { ans: "28", say: "That is Alex's total. Sam has s = 14 and Alex has 2s = 28. The question asks about Sam." },

@@ -16,6 +16,7 @@
   var PROGRESS_REPO = CFG.progressRepo || "joshRpowell/algebra-7h-progress";
   var NS            = CFG.ns           || "alg7h";
   var PLACEHOLDER   = CFG.answerPlaceholder || "x = ?  or  no solution";
+  var SUBJECT       = CFG.subject || "unknown";
   var LABELS        = CFG.labels || { run: "results", review: "needs-review", lesson: "lesson:" };
 
   /* ---------------- student identity ----------------
@@ -488,10 +489,13 @@
       "<!-- machine-readable; do not edit below -->\n" +
       "```json\n" +
       JSON.stringify({
-        student: this.student, lesson: cfg.lesson, solved: c.solved, total: c.total,
-        firstTry: c.first, minutes: mins,
+        v: 2,
+        student: this.student, subject: SUBJECT,
+        lesson: cfg.lesson, lessonTitle: cfg.title, unit: cfg.unit,
+        finishedAt: new Date().toISOString(),
+        solved: c.solved, total: c.total, firstTry: c.first, minutes: mins,
         problems: this.stats.map(function (st, i) {
-          return { n:i+1, solved:st.solved, firstTry:st.firstTry,
+          return { n:i+1, tag:(self.P[i].tag || null), solved:st.solved, firstTry:st.firstTry,
                    attempts:st.attempts, hint:st.hint, solution:st.shownSol,
                    wrong:st.wrong };
         })
@@ -516,14 +520,12 @@
     if (!host) return;
     host.innerHTML =
       '<h3>Save your results</h3>' +
-      '<p>Saving as <strong>' + esc(this.student) + '</strong>. ' +
-      'Sends this run to the <strong>private</strong> progress repo as a GitHub issue, ' +
-      'so it follows you between computers and your tutor can see how it actually went. ' +
-      'GitHub opens with everything filled in — add a note if you want, then hit ' +
-      '<em>Create</em>.</p>' +
+      '<p>Finishing as <strong>' + esc(this.student) + '</strong>. ' +
+      'Hit <em>Copy my results</em> and paste it to your tutor — that is how they see which ' +
+      'problems actually gave you trouble, so the next lesson targets the right thing.</p>' +
       '<div class="row">' +
-        '<button id="saveBtn" disabled>Save my results to GitHub</button>' +
-        '<button class="ghost" id="copyBtn">Copy as text</button>' +
+        '<button id="copyBtn">Copy my results</button>' +
+        '<button class="ghost" id="saveBtn" disabled>Save to GitHub instead</button>' +
         '<button class="ghost" id="resetBtn" style="display:none">Start over</button>' +
       '</div>' +
       '<div class="hint" id="saveMsg" style="display:none"></div>';
@@ -540,7 +542,7 @@
       var text = "# " + issue.title + "\n\n" + issue.body;
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(
-          function () { msg("Copied. Paste it anywhere — a new issue, a note, or a message to your tutor."); },
+          function () { msg("Copied. Now paste it into a message to your tutor."); },
           function () { fallback(text); });
       } else { fallback(text); }
     });

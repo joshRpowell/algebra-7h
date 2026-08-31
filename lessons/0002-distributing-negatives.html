@@ -202,16 +202,19 @@ Quiz.mount({
   mount:  "#quiz",
   problems: [
   { prompt: "\u2212(x + 7)", answer: "-x-7",
+    tag: "distribute-negative-one",
     hint: "Write the hidden \u22121 in front, then multiply it by each term inside.",
     commonErrors: [{ ans: "-x+7", say: "You flipped the x but left the 7 alone. The \u22121 multiplies EVERY term inside \u2014 the +7 has to become \u22127." }],
     sol: "\u2212(x + 7)\n= \u22121(x + 7)          (the hidden \u22121)\n= (\u22121)(x) + (\u22121)(7)\n= \u2212x \u2212 7\n\nCheck at x = 2: \u2212(2+7) = \u22129, and \u22122 \u2212 7 = \u22129. \u2713" },
 
   { prompt: "\u2212(x \u2212 4)", answer: "-x+4",
+    tag: "neg-times-neg",
     hint: "The term inside is \u22124. What is (\u22121) \u00d7 (\u22124)?",
     commonErrors: [{ ans: "-x-4", say: "Careful: (\u22121)(\u22124) = +4, not \u22124. A negative times a negative is positive." }],
     sol: "\u2212(x \u2212 4)\n= \u22121(x \u2212 4)\n= (\u22121)(x) + (\u22121)(\u22124)\n= \u2212x + 4\n\nCheck at x = 2: \u2212(2\u22124) = \u2212(\u22122) = 2, and \u22122 + 4 = 2. \u2713" },
 
   { prompt: "\u22125(x + 2)", answer: "-5x-10",
+    tag: "distribute-all-terms",
     hint: "Multiply \u22125 by x, then \u22125 by +2.",
     commonErrors: [
       { ans: "-5x+2",  say: "The \u22125 only reached the x. It has to multiply the +2 as well." },
@@ -219,16 +222,19 @@ Quiz.mount({
     sol: "\u22125(x + 2)\n= (\u22125)(x) + (\u22125)(2)\n= \u22125x \u2212 10\n\nCheck at x = 2: \u22125(4) = \u221220, and \u221210 \u2212 10 = \u221220. \u2713" },
 
   { prompt: "\u22122(4x \u2212 3)", answer: "-8x+6",
+    tag: "neg-times-neg",
     hint: "Two multiplications: (\u22122)(4x) and (\u22122)(\u22123).",
     commonErrors: [{ ans: "-8x-6", say: "This is the classic one. (\u22122)(\u22123) = +6 \u2014 negative times negative is positive." }],
     sol: "\u22122(4x \u2212 3)\n= (\u22122)(4x) + (\u22122)(\u22123)\n= \u22128x + 6\n\nCheck at x = 2: \u22122(8\u22123) = \u221210, and \u221216 + 6 = \u221210. \u2713" },
 
   { prompt: "5 \u2212 (2x \u2212 3)", answer: "-2x+8",
+    tag: "subtract-parenthesis",
     hint: "The minus in front of the parenthesis is a hidden \u22121. Distribute it, THEN combine the constants.",
     commonErrors: [{ ans: "-2x+2", say: "You distributed the minus to the 2x but not to the \u22123. It should become +3, giving 5 + 3 = 8." }],
     sol: "5 \u2212 (2x \u2212 3)\n= 5 \u2212 1(2x \u2212 3)\n= 5 \u2212 2x + 3      (both inside terms flip)\n= \u22122x + 8         (combine 5 + 3)\n\nCheck at x = 2: 5 \u2212 (4\u22123) = 4, and \u22124 + 8 = 4. \u2713" },
 
   { prompt: "\u2212(3x \u2212 1) + 2x", answer: "-x+1",
+    tag: "combine-like-terms",
     hint: "Distribute first, then combine the two x terms.",
     commonErrors: [
       { ans: "-x-1", say: "The distribution is right on the x terms, but (\u22121)(\u22121) = +1, so the constant is +1." },
@@ -236,11 +242,13 @@ Quiz.mount({
     sol: "\u2212(3x \u2212 1) + 2x\n= \u22123x + 1 + 2x     (distribute the \u22121)\n= (\u22123x + 2x) + 1\n= \u2212x + 1\n\nCheck at x = 2: \u2212(6\u22121) + 4 = \u22125 + 4 = \u22121, and \u22122 + 1 = \u22121. \u2713" },
 
   { prompt: "Solve:  12 \u2212 (2x \u2212 5) = 3", answer: "7",
+    tag: "subtract-parenthesis",
     hint: "Distribute the minus across BOTH terms first. The \u22125 becomes +5.",
     commonErrors: [{ ans: "2", say: "You got 12 \u2212 2x \u2212 5 instead of 12 \u2212 2x + 5. The \u22125 inside flips to +5 when the minus distributes." }],
     sol: "12 \u2212 (2x \u2212 5) = 3\n12 \u2212 2x + 5 = 3        (distribute \u2014 \u22125 becomes +5)\n17 \u2212 2x = 3             (combine constants)\n\u22122x = \u221214              (subtract 17)\nx = 7                     (divide by \u22122)\n\nCheck: 12 \u2212 (14 \u2212 5) = 12 \u2212 9 = 3. \u2713" },
 
   { prompt: "Solve:  4 \u2212 3(x \u2212 2) = 16", answer: "-2",
+    tag: "distribute-negative",
     hint: "Distribute the \u22123 across both terms before you combine anything.",
     commonErrors: [{ ans: "-6", say: "You used 4 \u2212 3x \u2212 6. But (\u22123)(\u22122) = +6, so it is 4 \u2212 3x + 6 = 10 \u2212 3x." }],
     sol: "4 \u2212 3(x \u2212 2) = 16\n4 \u2212 3x + 6 = 16        (distribute \u22123; (\u22123)(\u22122) = +6)\n10 \u2212 3x = 16            (combine constants)\n\u22123x = 6                  (subtract 10)\nx = \u22122                    (divide by \u22123)\n\nCheck: 4 \u2212 3(\u22122 \u2212 2) = 4 \u2212 3(\u22124) = 4 + 12 = 16. \u2713" }

@@ -21,6 +21,7 @@ window.SITE = {
   labels: { run: "results", review: "needs-review", lesson: "lesson:" },
 
   // Grading + UI copy that varies by subject
+  subject: "algebra",   // used to group runs in the cross-subject progress DB
   grader: "algebra",
   answerPlaceholder: "x = ?  or  no solution"
 };
